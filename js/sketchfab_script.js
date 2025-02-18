@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 console.log('Материал ' + materialName + ' не найден');
                             }
                         }
-
+                        changeOpacity('MI_Grile', 0);
 
                 
                         // Привязка событий к кнопкам
