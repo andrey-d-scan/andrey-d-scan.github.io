@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 material.channels.AlbedoPBR = {
                                     enable: true,
                                     color: color,
-                                    factor: 1.0
+                                    factor: 0.45
                                 };
                                 api.setMaterial(material, function(err, result) {
                                     if (err) {
