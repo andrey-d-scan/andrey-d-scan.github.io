@@ -4,9 +4,9 @@
         .confMenuContainer { background: #ddd; z-index: 30; height: 40px; padding: 2px; } 
         .confMenuContainer .nav-link { padding: 0.5rem; } 
         #confItemDisplay { display: flex; transition: all 0.4s; } 
-        #confMenu { position: relative; overflow-y: hidden; background: #ddd; height: calc(100vh - 40px); z-index: 800; box-shadow: 0 0 3px #aaa; transition: all 0.4s; } 
+        #confMenu { position: relative; overflow-y: hidden; background: #ddd; height: calc(100vh - 40px); z-index: 50; box-shadow: 0 0 3px #aaa; transition: all 0.4s; } 
         #confMenu.hidden { /*transform: translateX(-100%);*/ margin-left: -33%; } 
-        #toggleMenu { padding: 1em 1em 1em 0.8em; overflow: hidden; font-size: 1.8em; background: #ddd; border-radius: 0 6px 6px 0; height: 1em; z-index: 21; box-shadow: 0 0 3px #aaa; margin-right: -3em; z-index: 1001; cursor:pointer; line-height: 0; box-sizing:  content-box; } 
+        #toggleMenu { padding: 1em 1em 1em 0.8em; overflow: hidden; font-size: 1.8em; background: #ddd; border-radius: 0 6px 6px 0; height: 1em; z-index: 21; box-shadow: 0 0 3px #aaa; margin-right: -3em; z-index: 51; cursor:pointer; line-height: 0; box-sizing:  content-box; } 
         #cNav-tabContent { } 
             .tabContainer { overflow-x: hidden; position: absolute; left: 0; top: 0; height: 100%; overflow-y: auto; width: 100%; } 
             .colorDispContainer { /*overflow-y: scroll;*/ padding: 0; margin: 0 -6px 0 7px; } 
@@ -27,7 +27,7 @@
             /* #productSel-grilles { z-index: 503; opacity: 0.95; background-image: none; } #productSel-hardware { z-index: 502; background-image: none; mix-blend-mode: multiply; } #confMenu.hidden { margin-left: -25%; }  */
             .glyphicon { transition: all 0.4s; } 
             .glyphicon.hidden { display: none; } 
-        #productInfo { color:  #333; position: absolute; display: block; right: 0%; top: 50%; width: 266px; z-index: 9999; transform: translateY(-50%); } 
+        #productInfo { color:  #333; position: absolute; display: block; right: 0%; top: 50%; width: 266px; z-index: 50; transform: translateY(-50%); } 
         #productInfoContainer { background-color: #ddd; padding: 0.75em; transition: all 0.4s; } 
         #productInfoContainer.hidden { transform: translateX(100%); } 
         #productInfoContainer>div { padding-bottom: 0.6em; } 
@@ -39,13 +39,30 @@
         #loadingScr.hidden { display: none; } 
         #loadingScr .loadText { } 
         .productInfTitle { font-size: 1.5em; padding-bottom: 0.7em !important; border-bottom: 1px solid #aaa; font-weight: bold; } 
-        #closeProductInfo { position: absolute; right: 0px; padding: 1.2em 1.4em; background-color: #ddd; z-index: 444; } 
-        .productInfSub { letter-spacing: 0.1em; padding-top: 0.5em; } @media (min-width: 768px) { #confMenu.hidden { margin-left: -33%; } } @media (max-width: 767px) { body, html{ font-size: 0.8rem; } } @media print { #confMenu, #toggleMenu, .confMenuContainer { display: none; } 
-        #productDispContainer { height: 500px; } 
-        #productInfo { position: relative; display: block; margin: 0 !important; transform: none !important; top: 0; left: 0; right: auto; } 
-        #productInfo .printBtn { display: none; } 
-        #productInfoContainer.hidden { transform: none !important; } #closeProductInfo { display: none; }
-        #productInfo .colorBox { print-color-adjust: exact; } }</style><style>#api-frame {
+        #closeProductInfo { position: absolute; right: 0px; padding: 1.2em 1.4em; background-color: #ddd; z-index: 60; cursor:pointer; } 
+        .productInfSub { letter-spacing: 0.1em; padding-top: 0.5em; } 
+        @media (min-width: 768px) { #confMenu.hidden { margin-left: -33%; } } 
+        @media (max-width: 767px) { body, html{ font-size: 0.8rem; } } 
+        @media print { #confMenu, #toggleMenu, .confMenuContainer { display: none; } 
+            #productDispContainer { height: 500px; } 
+            #productInfo { position: relative; display: block; margin: 0 !important; transform: none !important; top: 0; left: 0; right: auto; } 
+            #productInfo .printBtn { display: none; } 
+            #productInfoContainer.hidden { transform: none !important; } #closeProductInfo { display: none; }
+            #productInfo .colorBox { print-color-adjust: exact; } 
+        }</style><style type="text/css">#toggleMenu { margin-right: -2.5em; }
+        @media (max-width: 1200px) {
+            #productInfo { width: 16%; }
+        }
+        @media (max-width: 767px) {
+            body { font-size: 1.2rem;}
+            #confMenu.hidden { margin-left: -25%; } 
+            #productInfo { font-size: 0.8rem; } 
+        } 
+        @media (max-width: 575px) {
+            #configuratorConainer { padding: 50px 0 0;} 
+            #productDispContainer { height: calc(100vh - 100px); }
+            #productInfo { width: 16% }
+        }</style><style type="text/css">#api-frame {
             width: 100%;
             height: 100%;
             border: none;
