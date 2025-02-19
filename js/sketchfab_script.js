@@ -16,6 +16,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Object to store current model data
     var currentModelData = {};
+    
+    // Object to store states of materials
+    var materialState = {};
+
 
     // Function to load a model
     window.loadModel = function(index) {
@@ -24,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
             var iframe = document.getElementById('api-frame');
             
             iframe.src = `https://sketchfab.com/models/${model.uid}/embed?autostart=1&transparent=1`;
-    
+
             var client = new Sketchfab(iframe);
             client.init(model.uid, {
                 transparent: 1,
@@ -36,14 +40,14 @@ document.addEventListener('DOMContentLoaded', function() {
                                 currentModelData.api = api;
                                 currentModelData.materials = materials;
                                 
-                                // Set initial opacity for MI_Grile
                                 changeOpacity('MI_Grile', 0); 
                                 
                                 bindEventHandlers();
+                                // Apply all saved properties to the new model
+                                applySavedProperties();
                                 
-                                // Update the model name in the product info
                                 updateModelName(model.name);
-
+                                
                                 resolve(); // Model fully initialized
                             } else {
                                 reject(err);
@@ -56,27 +60,72 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         });
-    };   
+    };  
 
     // New function to update the model name
     function updateModelName(name) {
         document.querySelector('#productInfo .productInfTitle').textContent = name;
     }
 
+    // Function to apply all saved properties
+function applySavedProperties() {
+    for (var materialName in materialState) {
+        if (materialState.hasOwnProperty(materialName)) {
+            for (var property in materialState[materialName]) {
+                if (materialState[materialName].hasOwnProperty(property)) {
+                    updateMaterialProperty(materialName, property, materialState[materialName][property]);
+                }
+            }
+        }
+    }
+}
+
+
+
     // Function to change color of a material
     function changeColor(materialName, color) {
+        updateMaterialProperty(materialName, 'color', color);
+    }
+
+    // Function to change opacity of a material
+    function changeOpacity(materialName, opacity) {
+        updateMaterialProperty(materialName, 'opacity', opacity);
+    }
+
+    // Function to update any property of a material
+    function updateMaterialProperty(materialName, property, value) {
         var material = currentModelData.materials.find(m => m.name === materialName);
         if (material) {
-            material.channels.AlbedoPBR = {
-                enable: true,
-                color: color,
-                factor: 0.45
-            };
+            if (!materialState[materialName]) {
+                materialState[materialName] = {};
+            }
+            materialState[materialName][property] = value;
+
+            // Apply changes based on property type
+            switch(property) {
+                case 'color':
+                    material.channels.AlbedoPBR = {
+                        enable: true,
+                        color: value,
+                        factor: 0.45
+                    };
+                    break;
+                case 'opacity':
+                    material.channels.Opacity = {
+                        enable: true,
+                        factor: value
+                    };
+                    break;
+                // Add handling for other properties here
+                default:
+                    console.warn(`Property ${property} not handled`);
+            }
+
             currentModelData.api.setMaterial(material, function(err, result) {
                 if (err) {
                     console.error('Error updating material:', err);
                 } else {
-                    console.log('Color of material ' + materialName + ' changed');
+                    console.log(`Property ${property} of material ${materialName} changed`);
                 }
             });
         } else {
@@ -84,25 +133,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Function to change opacity of a material
-    function changeOpacity(materialName, opacityValue) {
-        var material = currentModelData.materials.find(m => m.name === materialName);
-        if (material) {
-            material.channels.Opacity = {
-                enable: true,
-                factor: opacityValue
-            };
-            currentModelData.api.setMaterial(material, function(err, result) {
-                if (err) {
-                    console.error('Error updating material:', err);
-                } else {
-                    console.log('Opacity of material ' + materialName + ' changed');
-                }
-            });
-        } else {
-            console.log('Material ' + materialName + ' not found');
-        }
-    }
 
     // Function to bind event handlers
     function bindEventHandlers() {
@@ -277,4 +307,8 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('Error loading model:', err);
     });
 });
+
+
+
+
 
