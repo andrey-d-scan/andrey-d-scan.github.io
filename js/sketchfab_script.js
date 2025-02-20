@@ -306,7 +306,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     }
 
-    // Binding change event to model selector
+    // Bind events to model options in the sidebar (Products tab)
+    document.querySelectorAll('#modelColorContainer .colorDispItem[data-index]').forEach(item => {
+        item.addEventListener('click', function() {
+            var index = parseInt(this.getAttribute('data-index'), 10);
+            loadModel(index);
+            // Switch to Products tab (optional, if you want to stay on Products after clicking)
+            $('#nav-model-tab').tab('show');
+        });
+    });
+
+    // Binding change event to model selector (Optional)
     var modelSelector = document.getElementById('modelSelector');
     if (modelSelector) {
         modelSelector.addEventListener('change', function(e) {
