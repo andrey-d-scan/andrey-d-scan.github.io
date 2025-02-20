@@ -48,6 +48,19 @@ document.addEventListener('DOMContentLoaded', function() {
                                 applySavedProperties();
                                 
                                 updateModelName(model.name);
+
+                                // Set unique colors only for the first model (index 3, Alexia V)
+                                if (index === 3) { // Alexia V is at index 3
+                                    changeColor('MI_MainColor', [0.9490, 0.9490, 0.9490]); //Ethereal White Premium Pearl
+                                    
+                                    ['MI_AlumColor', 'MI_AlumColor_Logo', 'MI_CromeColor', 'MI_ScrewDecal', 'MI_AcousticDiode'].forEach(name => {
+                                        changeColor(name, [0.851, 0.682, 0.2]); // Gold
+                                    });
+                                    
+                                    ['MI_Logo', 'MI_Logo_2', 'MI_Text', 'MI_Text_2'].forEach(name => {
+                                        changeColor(name, [1, 1, 1]); // Text White
+                                    });
+                                }
                                 
                                 resolve(); // Model fully initialized
                             } else {
@@ -105,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     material.channels.AlbedoPBR = {
                         enable: true,
                         color: value,
-                        factor: 0.45
+                        factor: 0.5
                     };
                     break;
                 case 'opacity':
@@ -129,7 +142,6 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Material ' + materialName + ' not found');
         }
     }
-
 
     // Function to bind event handlers
     function bindEventHandlers() {
