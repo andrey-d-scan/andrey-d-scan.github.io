@@ -39,11 +39,12 @@ document.addEventListener('DOMContentLoaded', function() {
                             if (!err) {
                                 currentModelData.api = api;
                                 currentModelData.materials = materials;
+                                currentModelData.modelId = model.uid;
                                 
                                 changeOpacity('MI_Grile', 0); 
                                 
                                 bindEventHandlers();
-                                // Apply all saved properties to the new model
+                                // Apply all saved properties globally to the new model
                                 applySavedProperties();
                                 
                                 updateModelName(model.name);
@@ -67,20 +68,18 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelector('#productInfo .productInfTitle').textContent = name;
     }
 
-    // Function to apply all saved properties
-function applySavedProperties() {
-    for (var materialName in materialState) {
-        if (materialState.hasOwnProperty(materialName)) {
-            for (var property in materialState[materialName]) {
-                if (materialState[materialName].hasOwnProperty(property)) {
-                    updateMaterialProperty(materialName, property, materialState[materialName][property]);
+    // Function to apply all saved properties globally
+    function applySavedProperties() {
+        for (var materialName in materialState) {
+            if (materialState.hasOwnProperty(materialName)) {
+                for (var property in materialState[materialName]) {
+                    if (materialState[materialName].hasOwnProperty(property)) {
+                        updateMaterialProperty(materialName, property, materialState[materialName][property]);
+                    }
                 }
             }
         }
     }
-}
-
-
 
     // Function to change color of a material
     function changeColor(materialName, color) {
@@ -92,15 +91,14 @@ function applySavedProperties() {
         updateMaterialProperty(materialName, 'opacity', opacity);
     }
 
+
     // Function to update any property of a material
     function updateMaterialProperty(materialName, property, value) {
         var material = currentModelData.materials.find(m => m.name === materialName);
         if (material) {
-            if (!materialState[materialName]) {
-                materialState[materialName] = {};
-            }
+            materialState[materialName] = materialState[materialName] || {};
             materialState[materialName][property] = value;
-
+    
             // Apply changes based on property type
             switch(property) {
                 case 'color':
@@ -116,11 +114,10 @@ function applySavedProperties() {
                         factor: value
                     };
                     break;
-                // Add handling for other properties here
                 default:
                     console.warn(`Property ${property} not handled`);
             }
-
+    
             currentModelData.api.setMaterial(material, function(err, result) {
                 if (err) {
                     console.error('Error updating material:', err);
@@ -278,13 +275,20 @@ function applySavedProperties() {
         
         // Hardware Color
         document.getElementById('hardware-silver-natural').addEventListener('click', function() {
-            ['MI_AlumColor', 'MI_ScrewDecal', 'MI_AcousticDiode'].forEach(name => {
+            ['MI_AlumColor', 'MI_AlumColor_Logo', 'MI_CromeColor', 'MI_ScrewDecal', 'MI_AcousticDiode' ].forEach(name => {
                 changeColor(name, [0.6667, 0.6667, 0.6667]); // Silver / Natural
-            });    
+            });
+            ['MI_Logo', 'MI_Logo_2', 'MI_Text', 'MI_Text_2' ].forEach(name => {
+                changeColor(name, [0.05, 0.05, 0.05]); // Text Black
+            });
         });
+
         document.getElementById('hardware-black').addEventListener('click', function() {
-            ['MI_AlumColor', 'MI_ScrewDecal', 'MI_AcousticDiode'].forEach(name => {
+            ['MI_AlumColor', 'MI_AlumColor_Logo', 'MI_CromeColor', 'MI_ScrewDecal', 'MI_AcousticDiode' ].forEach(name => {
                 changeColor(name, [0.05, 0.05, 0.05]); // Black
+            });
+            ['MI_Logo', 'MI_Logo_2', 'MI_Text', 'MI_Text_2' ].forEach(name => {
+                changeColor(name, [1, 1, 1]); // Text White
             });
         });
 
@@ -307,8 +311,3 @@ function applySavedProperties() {
         console.error('Error loading model:', err);
     });
 });
-
-
-
-
-
