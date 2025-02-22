@@ -3,7 +3,7 @@
         .confMenuContainer { background: #ddd; z-index: 30; height: 40px; padding: 2px; } 
         .confMenuContainer .nav-link { padding: 0.5rem; } 
         #confItemDisplay { display: flex; transition: all 0.4s; } 
-        #confMenu { position: relative; overflow-y: hidden; background: #ddd; height: calc(100vh - 40px); z-index: 50; box-shadow: 0 0 3px #aaa; transition: all 0.4s; } 
+        #confMenu { position: relative; overflow-y: auto; background: #ddd; height: calc(100vh - 70px); z-index: 50; box-shadow: 0 0 3px #aaa; transition: all 0.4s; } 
         #confMenu.hidden { /*transform: translateX(-100%);*/ margin-left: -33%; } 
         #toggleMenu { padding: 1em 1em 1em 0.8em; overflow: hidden; font-size: 1.8em; background: #ddd; border-radius: 0 6px 6px 0; height: 1em; z-index: 21; box-shadow: 0 0 3px #aaa; margin-right: -3em; z-index: 51; cursor:pointer; line-height: 0; box-sizing:  content-box; } 
         #cNav-tabContent { } 
@@ -72,7 +72,8 @@
             .colorCatOpt { margin-left: 0;}
         } 
         @media (max-width: 575px) {
-            #productDispContainer { height: calc(100vh - 90px); }
+            #productDispContainer, #confMenu { height: calc(100vh - 90px); }
+
             #toggleMenu { font-size: 1.2em; }
             #productInfo { z-index: 0;}
             /* #closeProductInfo { pointer-events: none;} */
