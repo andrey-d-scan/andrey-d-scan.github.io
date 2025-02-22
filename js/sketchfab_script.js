@@ -342,21 +342,4 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('Error loading model:', err);
     });
 
-    document.addEventListener("DOMContentLoaded", () => {
-        const iframe = document.getElementById('api-frame');
-        const container = document.getElementById('productDispContainer');
-    
-        const adjustIframe = () => {
-            const containerWidth = container.offsetWidth;
-            const containerHeight = container.offsetHeight;
-            // Ensure iframe matches container dimensions
-            iframe.style.width = `${containerWidth}px`;
-            iframe.style.height = `${containerHeight}px`;
-        };
-    
-        // Adjust on load, resize, and orientation change
-        adjustIframe();
-        window.addEventListener('resize', adjustIframe);
-        window.addEventListener('orientationchange', adjustIframe);
-    });
 });
