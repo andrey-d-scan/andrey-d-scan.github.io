@@ -344,19 +344,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.addEventListener("DOMContentLoaded", () => {
         const iframe = document.getElementById('api-frame');
-        const resizeIframe = () => {
-            // Force iframe to recalculate size
-            iframe.style.height = '99%'; // Small tweak to trigger resize
-            setTimeout(() => {
-                iframe.style.height = '100%'; // Reset to full height
-            }, 10);
+        const container = document.getElementById('productDispContainer');
+    
+        const adjustIframe = () => {
+            const containerWidth = container.offsetWidth;
+            const containerHeight = container.offsetHeight;
+            // Ensure iframe matches container dimensions
+            iframe.style.width = `${containerWidth}px`;
+            iframe.style.height = `${containerHeight}px`;
         };
-
-        // Recalculate on orientation change or resize
-        window.addEventListener('resize', resizeIframe);
-        window.addEventListener('orientationchange', resizeIframe);
-
-        // Initial call to ensure proper sizing
-        resizeIframe();
+    
+        // Adjust on load, resize, and orientation change
+        adjustIframe();
+        window.addEventListener('resize', adjustIframe);
+        window.addEventListener('orientationchange', adjustIframe);
     });
 });
