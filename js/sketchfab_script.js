@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 success: function onSuccess(api) {
                     api.start();
                     api.addEventListener('viewerready', function() {
+                        
                         api.getMaterialList(function(err, materials) {
                             if (!err) {
                                 currentModelData.api = api;
@@ -42,26 +43,36 @@ document.addEventListener('DOMContentLoaded', function() {
                                 currentModelData.modelId = model.uid;
                                 
                                 changeOpacity('MI_Grile', 0); 
-                                
+
+                                // Set HDRI properties
+                                api.setEnvironment({
+                                    rotation: 0, 
+                                    exposure: 1.0, 
+                                    lightIntensity: 1.0, 
+                                    shadowEnabled: true 
+                                }, function(err) {
+                                    if (err) {
+                                        console.error('Error setting HDRI:', err);
+                                    } 
+                                });
+
+                                                                
                                 bindEventHandlers();
-                                // Apply all saved properties globally to the new model
                                 applySavedProperties();
                                 
                                 updateModelName(model.name);
 
-                                // Set unique colors only for the first model (index 3, Alexia V)
-                                if (index === 3) { // Alexia V is at index 3
+                                // Apply initial settings for specific model (index 3)
+                                if (index === 3) {
                                     changeColor('MI_MainColor', [0.9490, 0.9490, 0.9490]); //Ethereal White Premium Pearl
-                                    
                                     ['MI_AlumColor', 'MI_AlumColor_Logo', 'MI_CromeColor', 'MI_ScrewDecal', 'MI_AcousticDiode'].forEach(name => {
                                         changeColor(name, [0.851, 0.682, 0.2]); // Gold
                                     });
-                                    
                                     ['MI_Logo', 'MI_Logo_2', 'MI_Text', 'MI_Text_2'].forEach(name => {
                                         changeColor(name, [1, 1, 1]); // Text White
                                     });
                                 }
-                                
+                      
                                 resolve(); // Model fully initialized
                             } else {
                                 reject(err);
@@ -118,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     material.channels.AlbedoPBR = {
                         enable: true,
                         color: value,
-                        factor: 0.5
+                        factor: 1
                     };
                     break;
                 case 'opacity':
@@ -134,8 +145,6 @@ document.addEventListener('DOMContentLoaded', function() {
             currentModelData.api.setMaterial(material, function(err, result) {
                 if (err) {
                     console.error('Error updating material:', err);
-                } else {
-                    console.log(`Property ${property} of material ${materialName} changed`);
                 }
             });
         } else {
@@ -331,5 +340,23 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Model successfully loaded and initialized');
     }).catch(err => {
         console.error('Error loading model:', err);
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const iframe = document.getElementById('api-frame');
+        const resizeIframe = () => {
+            // Force iframe to recalculate size
+            iframe.style.height = '99%'; // Small tweak to trigger resize
+            setTimeout(() => {
+                iframe.style.height = '100%'; // Reset to full height
+            }, 10);
+        };
+
+        // Recalculate on orientation change or resize
+        window.addEventListener('resize', resizeIframe);
+        window.addEventListener('orientationchange', resizeIframe);
+
+        // Initial call to ensure proper sizing
+        resizeIframe();
     });
 });
