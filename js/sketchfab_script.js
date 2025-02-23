@@ -20,8 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Object to store states of materials
     var materialState = {};
 
-
-    // Function to load a model
+    // Lload a model
     window.loadModel = function(index) {
         return new Promise((resolve, reject) => {
             var model = modelsData[index];
@@ -35,31 +34,30 @@ document.addEventListener('DOMContentLoaded', function() {
                 success: function onSuccess(api) {
                     api.start();
                     api.addEventListener('viewerready', function() {
-                        
                         api.getMaterialList(function(err, materials) {
                             if (!err) {
                                 currentModelData.api = api;
                                 currentModelData.materials = materials;
                                 currentModelData.modelId = model.uid;
-                                
-                                changeOpacity('MI_Grile', 0); 
+
+                                // Log all available material channels for debugging
+                                console.log('Available materials and channels:', materials);
 
                                 // Set HDRI properties
-                                api.setEnvironment({
-                                    rotation: 0, 
-                                    exposure: 1.0, 
-                                    lightIntensity: 1.0, 
-                                    shadowEnabled: true 
-                                }, function(err) {
-                                    if (err) {
-                                        console.error('Error setting HDRI:', err);
-                                    } 
-                                });
+                                // api.setEnvironment({
+                                //     rotation: 5.8, 
+                                //     exposure: 1.0, 
+                                //     lightIntensity: 1.0, 
+                                //     shadowEnabled: true 
+                                // }, function(err) {
+                                //     if (err) {
+                                //         console.error('Error setting HDRI:', err);
+                                //     } 
+                                // });
 
-                                                                
+                                changeOpacity('MI_Grile', 0); 
                                 bindEventHandlers();
                                 applySavedProperties();
-                                
                                 updateModelName(model.name);
 
                                 // Apply initial settings for specific model (index 3)
@@ -72,7 +70,27 @@ document.addEventListener('DOMContentLoaded', function() {
                                 //         changeColor(name, [1, 1, 1]); // Text White
                                 //     });
                                 // }
-                      
+
+                                // Ограничение цветов для моделей с индексами 0 и 1
+                                const limitedColorModels = [4, 5]; // Пример: Sabrina X и Tune Tot
+                                const allowedColors = [
+                                    'body-galaxy-gray', // Galaxy Gray
+                                    'body-quartz',      // Quartz
+                                    'body-carbon',      // Carbon
+                                    'body-ivory',       // Ivory
+                                    'body-diamond-black', // Diamond Black
+                                    'body-crimson-satin'  // Crimson Satin
+                                ];
+                                const colorButtons = document.querySelectorAll('#bodyColorContainer .colorDispItem');
+                                if (limitedColorModels.includes(index)) {
+                                    colorButtons.forEach(button => {
+                                        const slug = button.getAttribute('data-slug');
+                                        button.style.display = allowedColors.includes(slug) ? 'block' : 'none';
+                                    });
+                                } else {
+                                    colorButtons.forEach(button => button.style.display = 'block');
+                                }
+
                                 resolve(); // Model fully initialized
                             } else {
                                 reject(err);
@@ -87,12 +105,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     };  
 
-    // New function to update the model name
+    // Update the model name
     function updateModelName(name) {
         document.querySelector('#productInfo .productInfTitle').textContent = name;
     }
 
-    // Function to apply all saved properties globally
+    // Apply all saved properties globally
     function applySavedProperties() {
         for (var materialName in materialState) {
             if (materialState.hasOwnProperty(materialName)) {
@@ -105,211 +123,442 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Function to change color of a material
-    function changeColor(materialName, color) {
-        updateMaterialProperty(materialName, 'color', color);
-    }
+    
 
-    // Function to change opacity of a material
+
+    // Update Base Color
+    function changeColor(materialName, colorValue) {
+        let rgb = colorValue; // Use RGB array directly
+        if (Array.isArray(colorValue)) {
+            rgb = colorValue.map(v => Math.round(v * 1000) / 1000); // Round to 3 decimal places for precision
+        } else {
+            console.error('Invalid color value:', colorValue);
+            return;
+        }
+        updateMaterialProperty(materialName, 'color', rgb);
+    }
+    // Update Base Color Intencity
+    function changeColorFactor(materialName, value) {
+        updateMaterialProperty(materialName, 'colorFactor', value);
+    }
+    // Update Metallic
+    function changeMetal(materialName, value) {
+        updateMaterialProperty(materialName, 'metal', value); 
+    }
+    // Update Roughness
+    function changeRoughness(materialName, value) {
+        updateMaterialProperty(materialName, 'roughness', value);
+    }
+    // Update Specular
+    function changeSpecular(materialName, value) {
+        updateMaterialProperty(materialName, 'specular', value);
+    }
+    // Update Clear Coat
+    function changeClearCoat(materialName, value) {
+        updateMaterialProperty(materialName, 'clearCoat', value);
+    }
+    // Update Clear Coat Enable/disable
+    function changeClearCoatEnable(materialName, value) {
+        updateMaterialProperty(materialName, 'clearCoatEnable', value);
+    }
+    // Update Clear Coat Intencity
+    function changeClearCoatFactor(materialName, value) {
+        updateMaterialProperty(materialName, 'clearCoatFactor', value);
+    }
+    // Update Clear Coat Thickness
+    function changeClearCoatThickness(materialName, value) {
+        updateMaterialProperty(materialName, 'clearCoatThickness', value);
+    }
+    // Update Clear Coat Roughness
+    function changeClearCoatRoughness(materialName, value) {
+        updateMaterialProperty(materialName, 'clearCoatRoughness', value);
+    }
+    // Update Opacity
     function changeOpacity(materialName, opacity) {
         updateMaterialProperty(materialName, 'opacity', opacity);
     }
 
 
-    // Function to update any property of a material
+    // Update any property of a material
     function updateMaterialProperty(materialName, property, value) {
         var material = currentModelData.materials.find(m => m.name === materialName);
         if (material) {
             materialState[materialName] = materialState[materialName] || {};
             materialState[materialName][property] = value;
     
+            let channels = {}; // Initialize channels for PBR properties only
+
             // Apply changes based on property type
             switch(property) {
-                case 'color':
-                    material.channels.AlbedoPBR = {
-                        enable: true,
-                        color: value,
-                        factor: 1
+                case 'color': // Base Color - Color
+                    channels = {
+                        AlbedoPBR: { color: value }
                     };
                     break;
-                case 'opacity':
-                    material.channels.Opacity = {
-                        enable: true,
-                        factor: value
+                case 'colorFactor': // Base Color - Intencity
+                    channels = {
+                        AlbedoPBR: { factor: value }
                     };
+                    break;
+                case 'metal': // Metallness (0.0-1.0)
+                    channels = {
+                        MetalnessPBR: { factor: value }
+                    };
+                    break;
+                case 'roughness': // Roughness (0.0-1.0)
+                    channels = {
+                        RoughnessPBR: { factor: value }
+                    };
+                    break;
+                case 'specular': // Specular (0.0-1.0)
+                    channels = {
+                        SpecularPBR: { factor: value }
+                    };
+                    break;
+                case 'clearCoatEnable': // Clear Coat Enable/disable
+                    channels = {
+                        ClearCoat: {
+                            enable: value === 1, // true/false based on 0/1
+                            factor: material.channels.ClearCoat?.factor || 0,
+                            thickness: material.channels.ClearCoat?.thickness || 0,
+                            reflectivity: material.channels.ClearCoat?.reflectivity || 0,
+                            tint: material.channels.ClearCoat?.tint || [1, 1, 1]
+                        }
+                    };
+                    break;
+                case 'clearCoatFactor': // Clear Coat Intensity
+                    channels = {
+                        ClearCoat: {
+                            enable: material.channels.ClearCoat?.enable || true,
+                            factor: value,       // Intensity (0-1)
+                            thickness: material.channels.ClearCoat?.thickness || 0,
+                            reflectivity: material.channels.ClearCoat?.reflectivity || 0,
+                            tint: material.channels.ClearCoat?.tint || [1, 1, 1]
+                        } 
+                    };
+                    break;
+                case 'clearCoatThickness': // Clear Coat Thickness
+                    channels = {
+                        ClearCoat: {
+                            enable: material.channels.ClearCoat?.enable || true,
+                            factor: material.channels.ClearCoat?.factor || 0,
+                            thickness: value,    // Thickness (0-20)
+                            reflectivity: material.channels.ClearCoat?.reflectivity || 0,
+                            tint: material.channels.ClearCoat?.tint || [1, 1, 1]
+                        }
+                    };
+                    break;
+                case 'clearCoatRoughness': // Clear Coat Roughness
+                        channels = {
+                            ClearCoatRoughness: {
+                                enable: true,
+                                factor: value        // Roughness of clear coat (0-1)
+                            }
+                        };
+                    break;
+                case 'opacity': //Opacity
+                    material.channels.Opacity = { enable: true, factor: value};
                     break;
                 default:
                     console.warn(`Property ${property} not handled`);
             }
-    
+            
+            // Apply PBR changes only if channels exist
+            if (property !== 'opacity' && Object.keys(channels).length > 0) {
+                Object.keys(channels).forEach(channel => {
+                    material.channels[channel] = channels[channel];
+                });
+            }
+
             currentModelData.api.setMaterial(material, function(err, result) {
                 if (err) {
-                    console.error('Error updating material:', err);
-                }
+                    console.error('Error updating material:', err, 'for property:', property, 'value:', value);
+            }
             });
         } else {
             console.log('Material ' + materialName + ' not found');
         }
     }
 
-    // Function to bind event handlers
+    // Bind event handlers
     function bindEventHandlers() {
         // Binding events to buttons
-        // Body Color Standard
+
+        // Add event listeners for material controls
+        // document.getElementById('color-factor-input')?.addEventListener('input', function(e) {
+        //     changeColorFactor('MI_MainColor', parseFloat(e.target.value) || 1);
+        // });
+        
+        // document.getElementById('metal-input')?.addEventListener('input', function(e) {
+        //     changeMetal('MI_MainColor', parseFloat(e.target.value) || 0);
+        // });
+
+        // document.getElementById('roughness-input')?.addEventListener('input', function(e) {
+        //     changeRoughness('MI_MainColor', parseFloat(e.target.value) || 1);
+        // });
+
+        // document.getElementById('specular-input')?.addEventListener('input', function(e) {
+        //     changeSpecular('MI_MainColor', parseFloat(e.target.value) || 0.5);
+        // });
+
+        // document.getElementById('clearcoat-enable')?.addEventListener('input', function(e) {
+        //     changeClearCoatEnable('MI_MainColor', parseInt(e.target.value) || 1);
+        // });
+    
+        // document.getElementById('clearcoat-factor')?.addEventListener('input', function(e) {
+        //     changeClearCoatFactor('MI_MainColor', parseFloat(e.target.value) || 1);
+        // });
+    
+        // document.getElementById('clearcoat-thickness')?.addEventListener('input', function(e) {
+        //     changeClearCoatThickness('MI_MainColor', parseFloat(e.target.value) || 1);
+        // });
+    
+        // document.getElementById('clearcoat-roughness-input')?.addEventListener('input', function(e) {
+        //     changeClearCoatRoughness('MI_MainColor', parseFloat(e.target.value) || 0.04);
+        // });
+
+
+
+
+        // Body Color - Standard
+        
+        // Galaxy Gray
         document.getElementById('body-galaxy-gray').addEventListener('click', function() {
-            changeColor('MI_MainColor', [0.2471, 0.2275, 0.2157]); // Galaxy Gray
+            changeColor('MI_MainColor', 
+                [0.0497, 0.0423, 0.0382]);
+            changeMetal('MI_MainColor', 0);
         });
+        // GT Silver
         document.getElementById('body-gt-silver').addEventListener('click', function() {
-            changeColor('MI_MainColor', [0.7137, 0.6980, 0.6824]); // GT Silver
+            changeColor('MI_MainColor', [0.4678, 0.4452, 0.4233]); 
+            changeMetal('MI_MainColor', 0);
         });
+        // Quartz
         document.getElementById('body-quartz').addEventListener('click', function() {
-            changeColor('MI_MainColor', [0.7647, 0.6941, 0.5725]); // Quartz
+            changeColor('MI_MainColor', [0.5457, 0.4397, 0.2874]); 
+            changeMetal('MI_MainColor', 0);
         });
+        // Carbon
         document.getElementById('body-carbon').addEventListener('click', function() {
-            changeColor('MI_MainColor', [0.1608, 0.1843, 0.1765]); // Carbon
+            changeColor('MI_MainColor', [0.0222, 0.0284, 0.0262]); 
+            changeMetal('MI_MainColor', 0);
         });
+        // Medio Grigio
         document.getElementById('body-medio-grigio').addEventListener('click', function() {
-            changeColor('MI_MainColor', [0.3725, 0.3725, 0.3725]); // Medio Grigio
+            changeColor('MI_MainColor', [0.1144, 0.1144, 0.1144]); 
+            changeMetal('MI_MainColor', 0);
         });
 
-        // Body Color Upgrade
+        // Body Color - Upgrade
+
+        // Obsidian Black
         document.getElementById('body-obsidian-black').addEventListener('click', function() {
-            changeColor('MI_MainColor', [0.0863, 0.1373, 0.1216]); // Obsidian Black
+            changeColor('MI_MainColor', [0.0080, 0.0168, 0.0137]); 
+            changeMetal('MI_MainColor', 0);
         });
+        // Ivory
         document.getElementById('body-ivory').addEventListener('click', function() {
-            changeColor('MI_MainColor', [0.9137, 0.8863, 0.8431]); // Ivory
+            changeColor('MI_MainColor', [0.8148, 0.7605, 0.6795]); 
+            changeMetal('MI_MainColor', 0);
         });
+        // Diamond Black
         document.getElementById('body-diamond-black').addEventListener('click', function() {
-            changeColor('MI_MainColor', [0.0392, 0.0471, 0.0431]); // Diamond Black
+            changeColor('MI_MainColor', [0.0030, 0.0037, 0.0033]); 
+            changeMetal('MI_MainColor', 0);
         });
+        // Crimson Satin
         document.getElementById('body-crimson-satin').addEventListener('click', function() {
-            changeColor('MI_MainColor', [0.4000, 0.0706, 0.0784]); // Crimson Satin
+            changeColor('MI_MainColor', [0.1329, 0.0060, 0.0070]); 
+            changeMetal('MI_MainColor', 0);
         });
+        // Fly Yellow
         document.getElementById('body-fly-yellow').addEventListener('click', function() {
-            changeColor('MI_MainColor', [0.9725, 0.8745, 0.0314]); // Fly Yellow
+            changeColor('MI_MainColor', [0.9387, 0.7379, 0.0024]); 
+            changeMetal('MI_MainColor', 0);
         });
+        // Estoril Blue
         document.getElementById('body-estoril-blue').addEventListener('click', function() {
-            changeColor('MI_MainColor', [0.2157, 0.2235, 0.3490]); // Estoril Blue
+            changeColor('MI_MainColor', [0.0382, 0.0409, 0.0999]); 
+            changeMetal('MI_MainColor', 0);
         });
+        // Nara Bronze
         document.getElementById('body-nara-bronze').addEventListener('click', function() {
-            changeColor('MI_MainColor', [0.3490, 0.3137, 0.2235]); // Nara Bronze
+            changeColor('MI_MainColor', [0.0999, 0.0802, 0.0409]); 
+            changeMetal('MI_MainColor', 0);
         });
+        // Pur Sang Rouge
         document.getElementById('body-pur-sang-rouge').addEventListener('click', function() {
-            changeColor('MI_MainColor', [0.7529, 0.1255, 0.1490]); // Pur Sang Rouge
+            changeColor('MI_MainColor', [0.5271, 0.0144, 0.0194]); 
+            changeMetal('MI_MainColor', 0);
         });
+        // Cobalt Blue Satin
         document.getElementById('body-cobalt-blue-satin').addEventListener('click', function() {
-            changeColor('MI_MainColor', [0.2392, 0.3020, 0.4902]); // Cobalt Blue Satin
+            changeColor('MI_MainColor', [0.0467, 0.0742, 0.2051]); 
+            changeMetal('MI_MainColor', 0);
         });
+        // Chalk
         document.getElementById('body-chalk').addEventListener('click', function() {
-            changeColor('MI_MainColor', [0.6431, 0.6510, 0.6353]); // Chalk
+            changeColor('MI_MainColor', [0.3712, 0.3813, 0.3613]); 
+            changeMetal('MI_MainColor', 0);
         });
+        // Classic Orange
         document.getElementById('body-classic-orange').addEventListener('click', function() {
-            changeColor('MI_MainColor', [0.8902, 0.3412, 0.0824]); // Classic Orange
+            changeColor('MI_MainColor', [0.7682, 0.0953, 0.0075]); 
+            changeMetal('MI_MainColor', 0);
         });
+        // Oak Green
         document.getElementById('body-oak-green-satin').addEventListener('click', function() {
-            changeColor('MI_MainColor', [0.1882, 0.2549, 0.1922]); // Oak Green
+            changeColor('MI_MainColor', [0.0296, 0.0529, 0.0307]); 
+            changeMetal('MI_MainColor', 0);
         });
+        // True Gold
         document.getElementById('body-true-gold').addEventListener('click', function() {
-            changeColor('MI_MainColor', [0.7059, 0.5804, 0.2471]); // True Gold
+            changeColor('MI_MainColor', [0.4564, 0.2961, 0.0497]); 
+            changeMetal('MI_MainColor', 0);
         });
+        // Meadow Mist Satin
         document.getElementById('body-meadow-mist-satin').addEventListener('click', function() {
-            changeColor('MI_MainColor', [0.5686, 0.5608, 0.4471]); // Meadow Mist Satin
+            changeColor('MI_MainColor', [0.2831, 0.2747, 0.1678]); 
+            changeMetal('MI_MainColor', 0);
         });
+        // Spearmint
         document.getElementById('body-spearmint').addEventListener('click', function() {
-            changeColor('MI_MainColor',[0.5020, 0.7765, 0.7059]); // Spearmint
+            changeColor('MI_MainColor', [0.2157, 0.5647, 0.4564]); 
+            changeMetal('MI_MainColor', 0);
         });
+        // Dark Walnut Metallic Satin
         document.getElementById('body-dark-walnut-metallic-satin').addEventListener('click', function() {
-            changeColor('MI_MainColor', [0.1804, 0.1412, 0.1059]); // Dark Walnut Metallic Satin
+            changeColor('MI_MainColor', [0.0273, 0.0176, 0.0110]); 
+            changeMetal('MI_MainColor', 0);
         });
+        // Blond Silver Satin
         document.getElementById('body-blond-silver-satin').addEventListener('click', function() {
-            changeColor('MI_MainColor', [0.6745, 0.6118, 0.4980]); // Blond Silver Satin
+            changeColor('MI_MainColor', [0.4125, 0.3324, 0.2122]); 
+            changeMetal('MI_MainColor', 0);
         });
 
-        // Body Color Premium Pearl
+        // Body Color - Premium Pearl
+
+        // Saffron Pearl
         document.getElementById('body-saffron-pearl').addEventListener('click', function() {
-            changeColor('MI_MainColor', [0.8745, 0.6784, 0.2353]); // Saffron Pearl
+            changeColor('MI_MainColor', [0.7379, 0.4179, 0.0452]); 
+            changeMetal('MI_MainColor', 1);
         });
+        // Bergamot Pearl
         document.getElementById('body-bergamot-pearl').addEventListener('click', function() {
-            changeColor('MI_MainColor', [0.9451, 0.4510, 0.1333]); // Bergamot Pearl
+            changeColor('MI_MainColor', [0.8796, 0.1714, 0.0160]); 
+            changeMetal('MI_MainColor', 1);
         });
+        // Cranberry Pearl
         document.getElementById('body-cranberry-pearl').addEventListener('click', function() {
-            changeColor('MI_MainColor', [0.3137, 0.1137, 0.0941]); // Cranberry Pearl
+            changeColor('MI_MainColor', [0.0802, 0.0122, 0.0091]); 
+            changeMetal('MI_MainColor', 1);
         });
+        // Olympia Pearl
         document.getElementById('body-olympia-pearl').addEventListener('click', function() {
-            changeColor('MI_MainColor', [0.8784, 0.8667, 0.8667]); // Olympia Pearl
+            changeColor('MI_MainColor', [0.7454, 0.7230, 0.7230]); 
+            changeMetal('MI_MainColor', 1);
         });
+        // Viola Pearl
         document.getElementById('body-viola-pearl').addEventListener('click', function() {
-            changeColor('MI_MainColor', [0.2157, 0.1451, 0.4118]); // Viola Pearl
+            changeColor('MI_MainColor', [0.0382, 0.0185, 0.1413]); 
+            changeMetal('MI_MainColor', 1);
         });
+        // Glacier Frost Pearl
         document.getElementById('body-glacier-frost-pearl').addEventListener('click', function() {
-            changeColor('MI_MainColor', [0.9490, 0.9490, 0.9294]); // Glacier Frost Pearl
+            changeColor('MI_MainColor', [0.8879, 0.8879, 0.8469]); 
+            changeMetal('MI_MainColor', 1);
         });
+        // Silver Ice Pearl
         document.getElementById('body-silver-ice-pearl').addEventListener('click', function() {
-            changeColor('MI_MainColor', [0.8157, 0.8549, 0.8980]); // Silver Ice Pearl
+            changeColor('MI_MainColor', [0.6308, 0.7011, 0.7835]); 
+            changeMetal('MI_MainColor', 1);
         });
+        // Blue Orchid Pearl
         document.getElementById('body-blue-orchid-pearl').addEventListener('click', function() {
-            changeColor('MI_MainColor', [0.3529, 0.6706, 0.7294]); // Blue Orchid Pearl
+            changeColor('MI_MainColor', [0.1022, 0.4072, 0.4910]); 
+            changeMetal('MI_MainColor', 1);
         });
+        // Ruby Red Pearl
         document.getElementById('body-ruby-red-pearl').addEventListener('click', function() {
-            changeColor('MI_MainColor', [0.5098, 0.0039, 0.0039]); // Ruby Red Pearl
+            changeColor('MI_MainColor', [0.2232, 0.0003, 0.0003]); 
+            changeMetal('MI_MainColor', 1);
         });
+        // Ember Pearl
         document.getElementById('body-ember-pearl').addEventListener('click', function() {
-            changeColor('MI_MainColor', [0.2392, 0.0863, 0.0784]); // Ember Pearl
+            changeColor('MI_MainColor', [0.0467, 0.0080, 0.0070]); 
+            changeMetal('MI_MainColor', 1);
         });
+        // NZ Black Sand Pearl
         document.getElementById('body-nz-black-sand-pearl').addEventListener('click', function() {
-            changeColor('MI_MainColor', [0.1804, 0.1412, 0.1059]); // NZ Black Sand Pearl
+            changeColor('MI_MainColor', [0.0273, 0.0176, 0.0110]); 
+            changeMetal('MI_MainColor', 1);
         });
+
 
         // Grille Color
+
+        // No Grille
         document.getElementById('no-grille').addEventListener('click', function() {
-            changeOpacity('MI_Grile', 0); // No Grille
+            changeOpacity('MI_Grile', 0); 
         });
+        // Black
         document.getElementById('grille-black').addEventListener('click', function() {
-            changeColor('MI_Grile', [0.0392, 0.0431, 0.0431]); // Black
-            changeOpacity('MI_Grile', 1); //
+            changeColor('MI_Grile', [0.0030, 0.0033, 0.0033]); 
+            changeOpacity('MI_Grile', 1);
         });
+        // Parchment Gray
         document.getElementById('grille-parchment-gray').addEventListener('click', function() {
-            changeColor('MI_Grile', [0.7137, 0.6706, 0.6471]); // Parchment Gray
-            changeOpacity('MI_Grile', 1); //
+            changeColor('MI_Grile', [0.4125, 0.3324, 0.2122]); 
+            changeOpacity('MI_Grile', 1);
         });
+        // Slate Gray
         document.getElementById('grille-slate-gray').addEventListener('click', function() {
-            changeColor('MI_Grile', [0.2235, 0.2196, 0.2275]); // Slate Gray
-            changeOpacity('MI_Grile', 1); //
+            changeColor('MI_Grile', [0.0409, 0.0395, 0.0423]); 
+            changeOpacity('MI_Grile', 1);
         });
+        // Mocha
         document.getElementById('grille-mocha').addEventListener('click', function() {
-            changeColor('MI_Grile', [0.2275, 0.1765, 0.1333]); // Mocha
-            changeOpacity('MI_Grile', 1); //
+            changeColor('MI_Grile', [0.0273, 0.0176, 0.0110]); 
+            changeOpacity('MI_Grile', 1);
         });
+        // Le Mans Blue
         document.getElementById('grille-le-mans-blue').addEventListener('click', function() {
-            changeColor('MI_Grile', [0.1216, 0.1294, 0.2]); // Le Mans Blue
-            changeOpacity('MI_Grile', 1); //
+            changeColor('MI_Grile', [0.0137, 0.0152, 0.0331]); 
+            changeOpacity('MI_Grile', 1);
         });
+        // Blanco
         document.getElementById('grille-blanco').addEventListener('click', function() {
-            changeColor('MI_Grile', [0.9647, 0.9647, 0.9529]); // Blanco
-            changeOpacity('MI_Grile', 1); //
+            changeColor('MI_Grile', [0.9216, 0.9216, 0.8963]); 
+            changeOpacity('MI_Grile', 1);
         });
+        // Crimson Red
         document.getElementById('grille-crimson-red').addEventListener('click', function() {
-            changeColor('MI_Grile', [0.4941, 0.1882, 0.1765]); // Crimson Red
-            changeOpacity('MI_Grile', 1); //
+            changeColor('MI_Grile', [0.2086, 0.0296, 0.0262]); 
+            changeOpacity('MI_Grile', 1);
         });
 
         
         // Hardware Color
+
+        // Silver / Natural
         document.getElementById('hardware-silver-natural').addEventListener('click', function() {
-            ['MI_AlumColor', 'MI_AlumColor_Logo', 'MI_CromeColor', 'MI_ScrewDecal', 'MI_AcousticDiode' ].forEach(name => {
-                changeColor(name, [0.6667, 0.6667, 0.6667]); // Silver / Natural
+            ['MI_AlumColor', 'MI_AlumColor_Logo', 'MI_CromeColor', 'MI_ScrewDecal', 'MI_AcousticDiode'].forEach(name => {
+                changeColor(name, [0.4020, 0.4020, 0.4020]);
             });
+            // Text Black
             ['MI_Logo', 'MI_Logo_2', 'MI_Text', 'MI_Text_2' ].forEach(name => {
-                changeColor(name, [0.05, 0.05, 0.05]); // Text Black
+                changeColor(name, [0, 0, 0]); 
             });
         });
-
+        // Black
         document.getElementById('hardware-black').addEventListener('click', function() {
-            ['MI_AlumColor', 'MI_AlumColor_Logo', 'MI_CromeColor', 'MI_ScrewDecal', 'MI_AcousticDiode' ].forEach(name => {
-                changeColor(name, [0.05, 0.05, 0.05]); // Black
+            ['MI_AlumColor', 'MI_AlumColor_Logo', 'MI_CromeColor', 'MI_ScrewDecal', 'MI_AcousticDiode'].forEach(name => {
+                changeColor(name, [0.05, 0.05, 0.05]); 
             });
+            // Text White
             ['MI_Logo', 'MI_Logo_2', 'MI_Text', 'MI_Text_2' ].forEach(name => {
-                changeColor(name, [1, 1, 1]); // Text White
+                changeColor(name,[0.95, 0.95, 0.95]); 
             });
         });
 
