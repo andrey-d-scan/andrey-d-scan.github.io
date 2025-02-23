@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 currentModelData.modelId = model.uid;
 
                                 // Log all available material channels for debugging
-                                console.log('Available materials and channels:', materials);
+                                // console.log('Available materials and channels:', materials);
 
                                 // Set HDRI properties
                                 // api.setEnvironment({
@@ -55,7 +55,12 @@ document.addEventListener('DOMContentLoaded', function() {
                                 //     } 
                                 // });
 
-                                changeOpacity('MI_Grile', 0); 
+                                if (index === 0 || !materialState['MI_Grile']?.opacity) {
+                                    changeOpacity('MI_Grile', 0);
+                                } else {
+                                    changeOpacity('MI_Grile', materialState['MI_Grile'].opacity);
+                                }
+                                
                                 bindEventHandlers();
                                 applySavedProperties();
                                 updateModelName(model.name);
