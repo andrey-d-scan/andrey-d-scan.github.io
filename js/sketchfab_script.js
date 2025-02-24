@@ -20,6 +20,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Object to store states of materials
     var materialState = {};
 
+    let isFirstLoad = true;
+    
     // Lload a model
     window.loadModel = function(index) {
         return new Promise((resolve, reject) => {
@@ -55,13 +57,25 @@ document.addEventListener('DOMContentLoaded', function() {
                                 //     } 
                                 // });
 
-                                if (index === 0 || !materialState['MI_Grile']?.opacity) {
-                                    changeOpacity('MI_Grile', 0);
+                                if (isFirstLoad) {
+                                    changeOpacity('MI_Grile', 0); // Установить прозрачность 0 только при первой загрузке
+                                    isFirstLoad = false; // Отметить, что первая загрузка выполнена
                                 } else {
-                                    changeOpacity('MI_Grile', materialState['MI_Grile'].opacity);
+                                    changeOpacity('MI_Grile', materialState['MI_Grile']?.opacity || 0); // Восстановить сохранённое значение или 0, если нет
                                 }
                                 
                                 bindEventHandlers();
+
+                                // Restore saved colors for MI_Logo and MI_Text from materialState, or use model defaults
+                                currentModelData.materials.forEach(material => {
+                                    if (material.name.startsWith('MI_Logo') || material.name.startsWith('MI_Text')) {
+                                        const savedColor = materialState[material.name]?.color;
+                                        if (savedColor) {
+                                            changeColor(material.name, savedColor); // Apply saved color if exists
+                                        }
+                                    }
+                                });
+
                                 applySavedProperties();
                                 updateModelName(model.name);
 
@@ -77,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 // }
 
                                 // Ограничение цветов для моделей с индексами 0 и 1
-                                const limitedColorModels = [4, 5]; // Пример: Sabrina X и Tune Tot
+                                const limitedColorModels = [4, 5]; // Sabrina X и Tune Tot
                                 const allowedColors = [
                                     'body-galaxy-gray', // Galaxy Gray
                                     'body-quartz',      // Quartz
@@ -552,8 +566,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 changeColor(name, [0.4020, 0.4020, 0.4020]);
             });
             // Text Black
-            ['MI_Logo', 'MI_Logo_2', 'MI_Text', 'MI_Text_2' ].forEach(name => {
-                changeColor(name, [0, 0, 0]); 
+            currentModelData.materials.forEach(material => {
+                if (material.name.startsWith('MI_Logo') || material.name.startsWith('MI_Text')) {
+                    changeColor(material.name, [0, 0, 0]); // Text Black
+                }
             });
         });
         // Black
@@ -562,8 +578,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 changeColor(name, [0.05, 0.05, 0.05]); 
             });
             // Text White
-            ['MI_Logo', 'MI_Logo_2', 'MI_Text', 'MI_Text_2' ].forEach(name => {
-                changeColor(name,[0.95, 0.95, 0.95]); 
+            currentModelData.materials.forEach(material => {
+                if (material.name.startsWith('MI_Logo') || material.name.startsWith('MI_Text')) {
+                    changeColor(material.name, [0.95, 0.95, 0.95]); // Text Black
+                }
             });
         });
 
