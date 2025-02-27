@@ -5,34 +5,34 @@ window.currentModelData = {};
 // Update these IDs if model changes (use top-level parent nodes for each model)
 window.nodeMapping = {
     front: {
-        'Alexx V': [580, 4808],      // WA_AlexxV_L, WA_AlexxV_R
-        'Alexia V': [262, 4514],     // WA_AlexiaV_L, WA_AlexiaV_R
-        'Sasha V': [2353, 4220],     // WA_SashaV_L, WA_SashaV_R
-        'The WATT/Puppy': [3653, 3938], // WA_WattPuppy_L, WA_WattPuppy_R
-        'SabrinaX': [2107, 3407],    // WA_SabrinaX_L, WA_SabrinaX_R
-        'TuneTot': [2887, 3147]      // WA_TuneTot_L, WA_TuneTot_R (includes Stand and Grile)
+        'Alexx V': [4592, 3107],      // WA_AlexxV_L, WA_AlexxV_R
+        'Alexia V': [5318, 2813],     // WA_AlexiaV_L, WA_AlexiaV_R
+        'Sasha V': [1646, 2519],     // WA_SashaV_L, WA_SashaV_R
+        'The WATT/Puppy': [1952, 2237], // WA_WattPuppy_L, WA_WattPuppy_R
+        'SabrinaX': [3833, 1400],    // WA_SabrinaX_L, WA_SabrinaX_R
+        'TuneTot': [897, 637]      // WA_TuneTot_L, WA_TuneTot_R (includes Stand and Grile)
     },
     center: {
-        'Mezzo CSC': [1819],         // WA_MezzoCSC001 (includes Stand and Grile)
-        'WASAE Center': [3],         // WASAE_Center001 (includes Grile)
+        'Mezzo CSC': [4079],         // WA_MezzoCSC001 (includes Stand and Grile)
+        'WASAE Center': [5612],         // WASAE_Center001 (includes Grile)
         'No': []
     },
     surround: {
-        'Alida CSC': [1309, 5534],   // WA_AlidaCSC_Wall_L, WA_AlidaCSC_Wall_R (includes Wall and Grile)
+        'Alida CSC': [352, 4],   // WA_AlidaCSC_Wall_L, WA_AlidaCSC_Wall_R (includes Wall and Grile)
         'No': []
     },
     subwoofer: {
-        // 'Submerge': [2650, 6041],
-        // 'LōKē': [1594, 5819],
-        // 'No': []
-
+        'Subsonic': {
+            'L': [6276],  // WA_Subsonic_L
+            'R': [6486]   // WA_Subsonic_R
+        },
         'Submerge': {
-            'L': [2650],  // WA_Submerge_L
-            'R': [6041]   // WA_Submerge_R
+            'L': [1157],  // WA_Submerge_L
+            'R': [6042]   // WA_Submerge_R
         },
         'LōKē': {
-            'L': [1594],  // WA_LoKe_L
-            'R': [5819]   // WA_LoKe_R
+            'L': [4367],  // WA_LoKe_L
+            'R': [5820]   // WA_LoKe_R
         },
         'No': {
             'L': [],
@@ -88,6 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
         { uid: '9dcd7023038d4d55b0e691ba6529c63a', name: 'Submerge' },
         { uid: '63508b8e85e34aff84a6348c4759c86f', name: 'LōKē' },
         { uid: 'b60c16b531084dbda253b8c7b8b0b2e2', name: 'Wilson Audio' },
+        { uid: 'b479bb02b127456c979f5b1f867eab6f', name: 'Subsonic' },
     ];
     
     // Object to store states of materials
