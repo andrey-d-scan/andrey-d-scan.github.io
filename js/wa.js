@@ -5,7 +5,7 @@ window.currentModelData = {};
 window.nodeMapping = {
     front: {
         'Alexx V': [5462, 3653],      // WA_AlexxV_L, WA_AlexxV_R
-        'Alexia V': [7752, 8132],     // WA_AlexiaV_L, WA_AlexiaV_R
+        'Alexia V': [7752, 8130],     // WA_AlexiaV_L, WA_AlexiaV_R
         'Sasha V': [2156, 3275],     // WA_SashaV_L, WA_SashaV_R
         'The WATT/Puppy': [2543, 2909], // WA_WattPuppy_L, WA_WattPuppy_R
         'SabrinaX': [4466, 1826],    // WA_SabrinaX_L, WA_SabrinaX_R
@@ -23,11 +23,11 @@ window.nodeMapping = {
     subwoofer: {
         'Subsonic': {
             'L': [7164],  // WA_Subsonic_L
-            'R': [7460]   // WA_Subsonic_R
+            'R': [7458]   // WA_Subsonic_R
         },
         'Submerge': {
             'L': [1514],  // WA_Submerge_L
-            'R': [6860]   // WA_Submerge_R
+            'R': [6858]   // WA_Submerge_R
         },
         'LōKē': {
             'L': [5165],  // WA_LoKe_L
