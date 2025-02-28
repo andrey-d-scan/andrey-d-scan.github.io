@@ -4,34 +4,34 @@ window.currentModelData = {};
 // Update these IDs if model changes (use top-level parent nodes for each model)
 window.nodeMapping = {
     front: {
-        'Alexx V': [5462, 3653],      // WA_AlexxV_L, WA_AlexxV_R
-        'Alexia V': [7752, 8130],     // WA_AlexiaV_L, WA_AlexiaV_R
-        'Sasha V': [2156, 3275],     // WA_SashaV_L, WA_SashaV_R
-        'The WATT/Puppy': [2543, 2909], // WA_WattPuppy_L, WA_WattPuppy_R
-        'SabrinaX': [4466, 1826],    // WA_SabrinaX_L, WA_SabrinaX_R
-        'TuneTot': [1170, 826]      // WA_TuneTot_L, WA_TuneTot_R
+        'Alexx V': ['WA_AlexxV_L', 'WA_AlexxV_R'],
+        'Alexia V': ['WA_AlexiaV_L', 'WA_AlexiaV_R'],
+        'Sasha V': ['WA_SashaV_L', 'WA_SashaV_R'],
+        'The WATT/Puppy': ['WA_WattPuppy_L', 'WA_WattPuppy_R'],
+        'SabrinaX': ['WA_SabrinaX_L', 'WA_SabrinaX_R'],
+        'TuneTot': ['WA_TuneTot_L', 'WA_TuneTot_R']
     },
     center: {
-        'Mezzo CSC': [4796],         // WA_MezzoCSC001
-        'WASAE Center': [6272],         // WASAE_Center001
+        'Mezzo CSC': ['WA_MezzoCSC001'],
+        'WASAE Center': ['WASAE_Center001'],
         'No': []
     },
     surround: {
-        'Alida CSC': [457, 4],   // WA_AlidaCSC_Wall_L, WA_AlidaCSC_Wall_R
+        'Alida CSC': ['WA_AlidaCSC_Wall_L', 'WA_AlidaCSC_Wall_R'],
         'No': []
     },
     subwoofer: {
         'Subsonic': {
-            'L': [7164],  // WA_Subsonic_L
-            'R': [7458]   // WA_Subsonic_R
+            'L': ['WA_Subsonic_L'],
+            'R': ['WA_Subsonic_R']
         },
         'Submerge': {
-            'L': [1514],  // WA_Submerge_L
-            'R': [6858]   // WA_Submerge_R
+            'L': ['WA_Submerge_L'],
+            'R': ['WA_Submerge_R']
         },
         'LōKē': {
-            'L': [5165],  // WA_LoKe_L
-            'R': [6564]   // WA_LoKe_R
+            'L': ['WA_LoKe_L'],
+            'R': ['WA_LoKe_R']
         },
         'No': {
             'L': [],
@@ -133,31 +133,59 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Function to update subwoofer visibility based on waState
+    // Update subwoofer visibility using node names
     function updateSubwooferDisplay() {
         if (!currentModelData.api) return; // Exit if Sketchfab API is not ready
-    
+
         const subwooferOptions = document.querySelector('.subwoofer-options');
-    
-        // Hide all subwoofers from nodeMapping
-        Object.keys(window.nodeMapping.subwoofer).forEach(model => {
-            const subNodes = window.nodeMapping.subwoofer[model];
-            if (subNodes['L']) subNodes['L'].forEach(id => currentModelData.api.hide(id));
-            if (subNodes['R']) subNodes['R'].forEach(id => currentModelData.api.hide(id));
+
+        // Hide all subwoofers from nodeMapping using node names
+        currentModelData.api.getNodeMap((err, nodeMap) => {
+            if (!err) {
+                Object.keys(window.nodeMapping.subwoofer).forEach(model => {
+                    const subNodes = window.nodeMapping.subwoofer[model];
+                    if (subNodes['L']) {
+                        subNodes['L'].forEach(name => {
+                            const node = Object.values(nodeMap).find(n => n.name === name && (n.type === 'Group' || n.type === 'MatrixTransform'));
+                            if (node) {
+                                currentModelData.api.hide(node.instanceID);
+                            }
+                        });
+                    }
+                    if (subNodes['R']) {
+                        subNodes['R'].forEach(name => {
+                            const node = Object.values(nodeMap).find(n => n.name === name && (n.type === 'Group' || n.type === 'MatrixTransform'));
+                            if (node) {
+                                currentModelData.api.hide(node.instanceID);
+                            }
+                        });
+                    }
+                });
+
+                if (waState.subwoofer === 'No') {
+                    subwooferOptions.style.display = 'none'; // Hide Sub L and Sub R buttons
+                } else {
+                    subwooferOptions.style.display = 'flex'; // Show Sub L and Sub R buttons
+                    const activeModel = window.nodeMapping.subwoofer[waState.subwoofer];
+                    if (waState.subL && activeModel['L']) {
+                        activeModel['L'].forEach(name => {
+                            const node = Object.values(nodeMap).find(n => n.name === name && (n.type === 'Group' || n.type === 'MatrixTransform'));
+                            if (node) {
+                                currentModelData.api.show(node.instanceID); // Show left subwoofer
+                            }
+                        });
+                    }
+                    if (waState.subR && activeModel['R']) {
+                        activeModel['R'].forEach(name => {
+                            const node = Object.values(nodeMap).find(n => n.name === name && (n.type === 'Group' || n.type === 'MatrixTransform'));
+                            if (node) {
+                                currentModelData.api.show(node.instanceID); // Show right subwoofer
+                            }
+                        });
+                    }
+                }
+            }
         });
-    
-        if (waState.subwoofer === 'No') {
-            subwooferOptions.style.display = 'none'; // Hide Sub L and Sub R buttons
-        } else {
-            subwooferOptions.style.display = 'flex'; // Show Sub L and Sub R buttons
-            const activeModel = window.nodeMapping.subwoofer[waState.subwoofer];
-            if (waState.subL && activeModel['L']) {
-                activeModel['L'].forEach(id => currentModelData.api.show(id)); // Show left subwoofer
-            }
-            if (waState.subR && activeModel['R']) {
-                activeModel['R'].forEach(id => currentModelData.api.show(id)); // Show right subwoofer
-            }
-        }
     }
 
         function toggleProductInfoMenu() { 
@@ -754,21 +782,41 @@ document.addEventListener('DOMContentLoaded', function() {
 
     }
 
-    // Hide all nodes in a category (using parent nodes)
+    // Hide all nodes for a category using node names
     function hideCategoryNodes(category) {
-        const nodes = window.nodeMapping[category];
-        Object.values(nodes).flat().forEach(id => {
-            if (id) {
-                currentModelData.api.hide(id);
+        if (!currentModelData.api) return; // Exit if API is not ready
+
+        const nodeNames = window.nodeMapping[category];
+        currentModelData.api.getNodeMap((err, nodeMap) => {
+            if (!err) {
+                Object.values(nodeNames).flat().forEach(name => {
+                    if (name) {
+                        const node = Object.values(nodeMap).find(n => n.name === name && (n.type === 'Group' || n.type === 'MatrixTransform'));
+                        if (node) {
+                            currentModelData.api.hide(node.instanceID);
+                        }
+                    }
+                });
             }
         });
     }
 
-    // Show specific nodes for a button (using parent nodes)
+    // Show specific nodes for a given category and name using node names
     function showNodes(category, name) {
-        const nodeIds = window.nodeMapping[category][name];
-        if (nodeIds && nodeIds.length > 0) {
-            nodeIds.forEach(id => currentModelData.api.show(id));
+        if (!currentModelData.api) return; // Exit if API is not ready
+
+        const nodeNames = window.nodeMapping[category][name];
+        if (nodeNames && nodeNames.length > 0) {
+            currentModelData.api.getNodeMap((err, nodeMap) => {
+                if (!err) {
+                    nodeNames.forEach(name => {
+                        const node = Object.values(nodeMap).find(n => n.name === name && (n.type === 'Group' || n.type === 'MatrixTransform'));
+                        if (node) {
+                            currentModelData.api.show(node.instanceID);
+                        }
+                    });
+                }
+            });
         }
     }
 
@@ -866,26 +914,54 @@ document.addEventListener('DOMContentLoaded', function() {
                 waState[type] = name;
     
                 if (window.currentModelData && window.currentModelData.api && window.nodeList) {
-                    // Hide all nodes for this type
-                    Object.keys(window.nodeMapping[type]).forEach(modelName => {
-                        const nodes = window.nodeMapping[type][modelName];
-                        if (Array.isArray(nodes)) {
-                            nodes.forEach(id => window.currentModelData.api.hide(id));
-                        } else {
-                            if (nodes['L']) nodes['L'].forEach(id => window.currentModelData.api.hide(id));
-                            if (nodes['R']) nodes['R'].forEach(id => window.currentModelData.api.hide(id));
+                    currentModelData.api.getNodeMap((err, nodeMap) => {
+                        if (!err) {
+                            // Hide all nodes for this type using node names
+                            Object.keys(window.nodeMapping[type]).forEach(modelName => {
+                                const nodes = window.nodeMapping[type][modelName];
+                                if (Array.isArray(nodes)) {
+                                    nodes.forEach(name => {
+                                        const node = Object.values(nodeMap).find(n => n.name === name && (n.type === 'Group' || n.type === 'MatrixTransform'));
+                                        if (node) {
+                                            currentModelData.api.hide(node.instanceID);
+                                        }
+                                    });
+                                } else {
+                                    if (nodes['L']) {
+                                        nodes['L'].forEach(name => {
+                                            const node = Object.values(nodeMap).find(n => n.name === name && (n.type === 'Group' || n.type === 'MatrixTransform'));
+                                            if (node) {
+                                                currentModelData.api.hide(node.instanceID);
+                                            }
+                                        });
+                                    }
+                                    if (nodes['R']) {
+                                        nodes['R'].forEach(name => {
+                                            const node = Object.values(nodeMap).find(n => n.name === name && (n.type === 'Group' || n.type === 'MatrixTransform'));
+                                            if (node) {
+                                                currentModelData.api.hide(node.instanceID);
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+                
+                            // Show nodes or delegate to updateSubwooferDisplay for subwoofers
+                            if (type === 'subwoofer') {
+                                updateSubwooferDisplay(); // Delegate subwoofer visibility to dedicated function
+                            } else {
+                                const nodeNames = window.nodeMapping[type][name];
+                                if (nodeNames && nodeNames.length > 0) {
+                                    nodeNames.forEach(name => {
+                                        const node = Object.values(nodeMap).find(n => n.name === name && (n.type === 'Group' || n.type === 'MatrixTransform'));
+                                        if (node) {
+                                            currentModelData.api.show(node.instanceID);
+                                        }
+                                    });
+                                }
+                            }
                         }
                     });
-    
-                    // Show nodes or delegate to updateSubwooferDisplay for subwoofers
-                    if (type === 'subwoofer') {
-                        updateSubwooferDisplay(); // Handle subwoofer visibility
-                    } else {
-                        const nodeIds = window.nodeMapping[type][name];
-                        if (nodeIds && nodeIds.length > 0) {
-                            nodeIds.forEach(id => window.currentModelData.api.show(id));
-                        }
-                    }
                 }
                 
                 restrictBodyColors();
