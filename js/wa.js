@@ -5,34 +5,34 @@ window.currentModelData = {};
 // Update these IDs if model changes (use top-level parent nodes for each model)
 window.nodeMapping = {
     front: {
-        'Alexx V': [4592, 3107],      // WA_AlexxV_L, WA_AlexxV_R
-        'Alexia V': [5318, 2813],     // WA_AlexiaV_L, WA_AlexiaV_R
-        'Sasha V': [1646, 2519],     // WA_SashaV_L, WA_SashaV_R
-        'The WATT/Puppy': [1952, 2237], // WA_WattPuppy_L, WA_WattPuppy_R
-        'SabrinaX': [3833, 1400],    // WA_SabrinaX_L, WA_SabrinaX_R
-        'TuneTot': [897, 637]      // WA_TuneTot_L, WA_TuneTot_R (includes Stand and Grile)
+        'Alexx V': [5840, 4031],      // WA_AlexxV_L, WA_AlexxV_R
+        'Alexia V': [6650, 3653],     // WA_AlexiaV_L, WA_AlexiaV_R
+        'Sasha V': [2156, 3275],     // WA_SashaV_L, WA_SashaV_R
+        'The WATT/Puppy': [2543, 2909], // WA_WattPuppy_L, WA_WattPuppy_R
+        'SabrinaX': [4844, 1826],    // WA_SabrinaX_L, WA_SabrinaX_R
+        'TuneTot': [1170, 826]      // WA_TuneTot_L, WA_TuneTot_R (includes Stand and Grile)
     },
     center: {
-        'Mezzo CSC': [4079],         // WA_MezzoCSC001 (includes Stand and Grile)
-        'WASAE Center': [5612],         // WASAE_Center001 (includes Grile)
+        'Mezzo CSC': [5174],         // WA_MezzoCSC001 (includes Stand and Grile)
+        'WASAE Center': [7028],         // WASAE_Center001 (includes Grile)
         'No': []
     },
     surround: {
-        'Alida CSC': [352, 4],   // WA_AlidaCSC_Wall_L, WA_AlidaCSC_Wall_R (includes Wall and Grile)
+        'Alida CSC': [457, 4],   // WA_AlidaCSC_Wall_L, WA_AlidaCSC_Wall_R (includes Wall and Grile)
         'No': []
     },
     subwoofer: {
         'Subsonic': {
-            'L': [6276],  // WA_Subsonic_L
-            'R': [6486]   // WA_Subsonic_R
+            'L': [7920],  // WA_Subsonic_L
+            'R': [8214]   // WA_Subsonic_R
         },
         'Submerge': {
-            'L': [1157],  // WA_Submerge_L
-            'R': [6042]   // WA_Submerge_R
+            'L': [1514],  // WA_Submerge_L
+            'R': [7614]   // WA_Submerge_R
         },
         'LōKē': {
-            'L': [4367],  // WA_LoKe_L
-            'R': [5820]   // WA_LoKe_R
+            'L': [5543],  // WA_LoKe_L
+            'R': [7320]   // WA_LoKe_R
         },
         'No': {
             'L': [],
@@ -220,6 +220,7 @@ document.addEventListener('DOMContentLoaded', function() {
             var client = new Sketchfab(iframe);
             client.init(model.uid, {
                 transparent: 1,
+                // autospin: 0.1,
                 success: function onSuccess(api) {
                     api.start();
                     api.addEventListener('viewerready', function() {
