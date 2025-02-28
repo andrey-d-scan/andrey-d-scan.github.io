@@ -1,38 +1,37 @@
 // Object to store current model data
 window.currentModelData = {};
 
-// Node mapping for WA_Scene (modelId: 'b60c16b531084dbda253b8c7b8b0b2e2')
 // Update these IDs if model changes (use top-level parent nodes for each model)
 window.nodeMapping = {
     front: {
-        'Alexx V': [5840, 4031],      // WA_AlexxV_L, WA_AlexxV_R
-        'Alexia V': [6650, 3653],     // WA_AlexiaV_L, WA_AlexiaV_R
+        'Alexx V': [5462, 3653],      // WA_AlexxV_L, WA_AlexxV_R
+        'Alexia V': [7752, 8132],     // WA_AlexiaV_L, WA_AlexiaV_R
         'Sasha V': [2156, 3275],     // WA_SashaV_L, WA_SashaV_R
         'The WATT/Puppy': [2543, 2909], // WA_WattPuppy_L, WA_WattPuppy_R
-        'SabrinaX': [4844, 1826],    // WA_SabrinaX_L, WA_SabrinaX_R
-        'TuneTot': [1170, 826]      // WA_TuneTot_L, WA_TuneTot_R (includes Stand and Grile)
+        'SabrinaX': [4466, 1826],    // WA_SabrinaX_L, WA_SabrinaX_R
+        'TuneTot': [1170, 826]      // WA_TuneTot_L, WA_TuneTot_R
     },
     center: {
-        'Mezzo CSC': [5174],         // WA_MezzoCSC001 (includes Stand and Grile)
-        'WASAE Center': [7028],         // WASAE_Center001 (includes Grile)
+        'Mezzo CSC': [4796],         // WA_MezzoCSC001
+        'WASAE Center': [6272],         // WASAE_Center001
         'No': []
     },
     surround: {
-        'Alida CSC': [457, 4],   // WA_AlidaCSC_Wall_L, WA_AlidaCSC_Wall_R (includes Wall and Grile)
+        'Alida CSC': [457, 4],   // WA_AlidaCSC_Wall_L, WA_AlidaCSC_Wall_R
         'No': []
     },
     subwoofer: {
         'Subsonic': {
-            'L': [7920],  // WA_Subsonic_L
-            'R': [8214]   // WA_Subsonic_R
+            'L': [7164],  // WA_Subsonic_L
+            'R': [7460]   // WA_Subsonic_R
         },
         'Submerge': {
             'L': [1514],  // WA_Submerge_L
-            'R': [7614]   // WA_Submerge_R
+            'R': [6860]   // WA_Submerge_R
         },
         'LōKē': {
-            'L': [5543],  // WA_LoKe_L
-            'R': [7320]   // WA_LoKe_R
+            'L': [5165],  // WA_LoKe_L
+            'R': [6564]   // WA_LoKe_R
         },
         'No': {
             'L': [],
