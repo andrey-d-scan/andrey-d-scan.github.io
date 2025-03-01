@@ -1047,6 +1047,19 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('Error loading model:', err);
     });
 
+    // Fullscreen mode
+    const fullscreenBtn = document.getElementById('nav-fullscreen-tab');
+    fullscreenBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen()
+                .catch(err => console.error('Fullscreen failed:', err));
+        } else {
+            document.exitFullscreen()
+                .catch(err => console.error('Exit fullscreen failed:', err));
+        }
+        fullscreenBtn.classList.toggle('active');
+    });
 });
 
 // кастомный код из app.js для уаравления вкладками, сохранен на всякий случай
