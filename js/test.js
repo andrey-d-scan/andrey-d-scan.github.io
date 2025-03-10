@@ -397,7 +397,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
 
                 // Загрузка видео текстуры
-                api.addVideoTexture(`${window.location.origin}/img/video/video.mp4`, { loop: true, mute: true }, function(err, uid) {
+                api.addVideoTexture(`https://andrey-d-scan.github.io/img/video/video.mp4`, { loop: true, mute: true }, function(err, uid) {
                     if (!err) {
                         videoTextureUid = uid;
                         console.log('Video texture loaded with UID:', uid);
