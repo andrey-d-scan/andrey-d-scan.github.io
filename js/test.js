@@ -337,6 +337,7 @@ document.addEventListener('DOMContentLoaded', function() {
     client.init('c18058d0c3624784ad6cd56f93e81e1f', {
         autostart: 1,
         camera: 0,
+        webgl2: 0,
         success: function onSuccess(api) {
             api.start();
             let textureUIDs = {};
