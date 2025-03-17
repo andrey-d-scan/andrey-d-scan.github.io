@@ -398,7 +398,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
 
                 // Загрузка видео текстуры
-                api.addVideoTexture(`https://dscanstudio.com/img/video/video.mp4`, { loop: true, mute: true }, function(err, uid) {
+                api.addVideoTexture(`${window.location.origin}/img/video/video.mp4`, { loop: true, mute: true }, function(err, uid) {
                     if (!err) {
                         videoTextureUid = uid;
                         console.log('Video texture loaded with UID:', uid);
