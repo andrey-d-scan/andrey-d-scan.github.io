@@ -758,7 +758,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Silver / Natural
         document.getElementById('hardware-silver-natural').addEventListener('click', function() {
             ['MI_AlumColor', 'MI_AlumColor_Logo', 'MI_CromeColor', 'MI_ScrewDecal', 'MI_AcousticDiode'].forEach(name => {
-                changeColor(name, [0.4020, 0.4020, 0.4020]);
+                changeColor(name, [1, 1, 1]);
             });
             // Text Black
             currentModelData.materials.forEach(material => {
@@ -775,7 +775,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Text White
             currentModelData.materials.forEach(material => {
                 if (material.name.startsWith('MI_Logo') || material.name.startsWith('MI_Text')) {
-                    changeColor(material.name, [0.95, 0.95, 0.95]); // Text Black
+                    changeColor(material.name, [1, 1, 1]); // Text Black
                 }
             });
         });
