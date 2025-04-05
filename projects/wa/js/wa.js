@@ -9,7 +9,8 @@ window.nodeMapping = {
         'Sasha V': ['WA_SashaV_L', 'WA_SashaV_R'],
         'The WATT/Puppy': ['WA_WattPuppy_L', 'WA_WattPuppy_R'],
         'SabrinaX': ['WA_SabrinaX_L', 'WA_SabrinaX_R'],
-        'TuneTot': ['WA_TuneTot_L', 'WA_TuneTot_R']
+        'TuneTot': ['WA_TuneTot_L', 'WA_TuneTot_R'],
+        'Alida_CSC': ['WA_AlidaCSC_L_Wall', 'WA_AlidaCSC_R_Wall']
     },
     center: {
         'Mezzo CSC': ['WA_MezzoCSC001'],
@@ -17,7 +18,8 @@ window.nodeMapping = {
         'No': []
     },
     surround: {
-        'Alida CSC': ['WA_AlidaCSC_Wall_L', 'WA_AlidaCSC_Wall_R'],
+        'TuneTot_S': ['WA_TuneTot_SL', 'WA_TuneTot_SR'],
+        'Alida_CSC_S': ['WA_AlidaCSC_SL_Wall', 'WA_AlidaCSC_SR_Wall'],
         'No': []
     },
     subwoofer: {

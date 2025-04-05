@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function() {
             'No': []
         },
         surround: {
-            'Surround1': ['SF_Surround1_L', 'SF_Surround1_R'],
+            'Guarneri_S': ['SF_Guarneri_SL', 'SF_Guarneri_SR'],
             'No': []
         },
         subwoofer: {
