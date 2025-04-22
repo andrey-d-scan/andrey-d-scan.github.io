@@ -1,5 +1,15 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>D.Scan - Test Solutions</title><link rel="icon" type="image/x-icon" href="/assets/favicons/favicon.ico"><link rel="stylesheet" href="/assets/css/style.min.css"><style type="text/css">#api-frame { width: 100%; height: 100%; border: none; display: block; }
-        #productDispContainer {flex: 1; width: auto; padding-top: 30px; position: relative; height: 100dvh; }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D.Scan - Test Solutions</title>
+    <link rel="icon" type="image/x-icon" href="/assets/favicons/favicon.ico">
+    <link rel="stylesheet" href="/assets/css/style.min.css">
+
+    <style type="text/css">
+        #api-frame { width: 100%; height: 100%; border: none; display: block; }
+        #productDispContainer {flex: 1; width: auto; position: relative; height: 100dvh; }
         .container-fluid { display: flex; height: 100dvh; width: 100%;}
         .test-buttons { display: flex; flex-direction: column; gap: 10px; width: 200px; padding: 10px; background: #ddd; overflow-y: auto; }
         .button-group { margin-bottom: 20px; }
@@ -15,7 +25,19 @@
         #materialControls > div { display: flex; justify-content: space-between; align-items: center; }
         #materialControls > div > label { margin: 0; }
         #materialControls > div > input { width: 60px; margin: 0; }
-        #materialControls .title { font-weight: bold; margin-bottom: 5px;}</style></head><body><header class="menu"><nav class="nav-menu"><div class="container"><div class="hamburger"><span></span> <span></span> <span></span></div><img src="/assets/img/logo/logo_w.png" alt="D.Scan Studio Logo" class="menu__logo"><div class="menu__wrapper"><div class="menu__close">&times</div><ul class="menu__list"><li class="menu__item"><a href="/index.html">Main</a></li><li class="menu__item menu__item--dropdown"><a href="#" class="menu__link">Projects</a><ul class="menu__dropdown"><li><a href="/projects/3d/3d.html">3D Project</a></li><li><a href="/projects/wa/wa.html">Wilson Audio</a></li><li><a href="/projects/sf/sf.html">Sonus Faber</a></li><li><a href="/projects/test/test.html">Test</a></li></ul></li><li class="menu__item"><a href="/pages/smart_home.html">Smart Home</a></li></ul></div></div></nav></header><div class="container-fluid"><!-- Calibration color, option --><!-- <div id="materialControls">
+        #materialControls .title { font-weight: bold; margin-bottom: 5px;}
+    </style>
+</head>
+<body>
+   
+    <div id="header"></div>
+    
+    
+    <div class="container-fluid">
+
+
+    <!-- Calibration color, option -->
+    <!-- <div id="materialControls">
         <div class="title">Base Parameters</div>
         <div>
             <label for="color-factor-input">Base Color (0-1)</label>
@@ -54,4 +76,62 @@
             <label for="opacity-input">Opacity (0-1)</label>
             <input type="number" id="opacity-input" min="0" max="1" step="0.1" value="1">
         </div>
-    </div> --><!-- Контейнер для кнопок --><div class="test-buttons"><div class="button-group"><h3>Фон</h3><button id="test-btn-1" class="test-btn"><div class="btn-bg" style="background: #0a0c0b;"></div><div class="btn-text">Diamond Black</div></button> <button id="test-btn-2" class="test-btn"><div class="btn-bg" style="background: #16231f;"></div><div class="btn-text">Obsidian Black</div></button> <button id="test-btn-3" class="test-btn"><div class="btn-bg" style="background: #595039;"></div><div class="btn-text">Nara Bronze</div></button> <button id="test-btn-4" class="test-btn"><div class="btn-bg" style="background: #b4943f;"></div><div class="btn-text">True Gold</div></button> <button id="test-btn-5" class="test-btn"><div class="btn-bg" style="background: #b6b6b6;"></div><div class="btn-text">Mirror</div></button> <button id="test-btn-6" class="test-btn"><div class="btn-bg" style="background: #e0e0e0;"></div><div class="btn-text">6</div></button> <button id="test-btn-7" class="test-btn"><div class="btn-bg" style="background: #e0e0e0;"></div><div class="btn-text">7</div></button> <button id="test-btn-8" class="test-btn"><div class="btn-bg" style="background: #e0e0e0;"></div><div class="btn-text">8</div></button> <button id="test-btn-9" class="test-btn"><div class="btn-bg" style="background: #e0e0e0;"></div><div class="btn-text">Open Doors</div></button> <button id="test-btn-10" class="test-btn"><div class="btn-bg" style="background: #e0e0e0;"></div><div class="btn-text">TV</div></button></div></div><div id="productDispContainer"><iframe id="api-frame" title="Wilson Audio Alexia V" frameborder="0" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/c18058d0c3624784ad6cd56f93e81e1f/embed?autostart=1&&camera=0"></iframe></div><video id="video-source" src="/projects/test/img/video.mp4" loop muted style="display: none;"></video><script src="/assets/js/script.js"></script><script type="text/javascript" src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"></script><script src="js/test.js"></script></div></body></html>
+    </div> -->
+
+    <!-- Контейнер для кнопок -->
+    <div class="test-buttons">
+        <div class="button-group">
+            <h3>Color</h3>
+            <button id="test-btn-1" class="test-btn">
+                <div class="btn-bg" style="background: #0a0c0b;"></div>
+                <div class="btn-text">Diamond Black</div>
+            </button>
+            <button id="test-btn-2" class="test-btn">
+                <div class="btn-bg" style="background: #16231f;"></div>
+                <div class="btn-text">Obsidian Black</div>
+            </button>
+            <button id="test-btn-3" class="test-btn">
+                <div class="btn-bg" style="background: #595039;"></div>
+                <div class="btn-text">Nara Bronze</div>
+            </button>
+            <button id="test-btn-4" class="test-btn">
+                <div class="btn-bg" style="background: #b4943f;"></div>
+                <div class="btn-text">True Gold</div>
+            </button>
+            <button id="test-btn-5" class="test-btn">
+                <div class="btn-bg" style="background: #b6b6b6;"></div>
+                <div class="btn-text">Mirror</div>
+            </button>
+            <button id="test-btn-6" class="test-btn">
+                <div class="btn-bg" style="background: #e0e0e0;"></div>
+                <div class="btn-text">6</div>
+            </button>
+            <button id="test-btn-7" class="test-btn">
+                <div class="btn-bg" style="background: #e0e0e0;"></div>
+                <div class="btn-text">7</div>
+            </button>
+            <button id="test-btn-8" class="test-btn">
+                <div class="btn-bg" style="background: #e0e0e0;"></div>
+                <div class="btn-text">8</div>
+            </button>
+            <button id="test-btn-9" class="test-btn">
+                <div class="btn-bg" style="background: #e0e0e0;"></div>
+                <div class="btn-text">Open Doors</div>
+            </button>
+            <button id="test-btn-10" class="test-btn">
+                <div class="btn-bg" style="background: #e0e0e0;"></div>
+                <div class="btn-text">TV</div>
+            </button>
+        </div>
+    </div>
+    <div id="productDispContainer">
+        <iframe id="api-frame" title="Wilson Audio Alexia V" frameborder="0" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/c18058d0c3624784ad6cd56f93e81e1f/embed?autostart=1&amp;&amp;camera=0"> </iframe>
+    </div>
+
+    <video id="video-source" src="/projects/test/img/video.mp4" loop muted style="display: none;"></video>
+    
+    <script src="/assets/js/header.js"></script>
+    <script type="text/javascript" src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"></script>
+    <script src="js/test.js"></script>
+</div></body>
+</html>

@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Load a model
     client.init('46f74f13389e46b499d74d7388a73a0e', {
         autostart: 1,
-        camera: 0,
+        // camera: 0,
         transparent: 1,
         success: function onSuccess(api) {
             api.start();
