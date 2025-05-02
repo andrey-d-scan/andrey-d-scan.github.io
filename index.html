@@ -10,13 +10,34 @@
 
 <body>
     <div id="header"></div>
-    <video autoplay loop muted playsinline style="width: 100%; height: auto; display: block;" poster="/assets/img/video/Intro_McLaren.jpg">
-        <source src="/assets/img/video/Intro_McLaren.mp4" type="video/mp4">
-    </video>
+    
+    <!-- Video -->
+    <section class="Video">
+        <video autoplay loop muted playsinline style="width: 100%; height: auto; display: block;" poster="/assets/img/video/Intro_McLaren.jpg">
+            <source src="/assets/img/video/Intro_McLaren.mp4" type="video/mp4">
+        </video>
+    </section>
+    
+    <!-- Title -->
+    <section class="main">
+        
+            <h1 data-i18n="01001">Welcome</h1>
+            <h2 data-i18n="01002">The site is in development. More features coming soon.</h2>
+        
+    </section>
+
     <section class="main">
         <div class="container">
-            <h1 data-i18n="01001">Welcome</h1>
-            <p data-i18n="01002">The site is in development. More features coming soon.</p>
+            <div>
+                <div class="main__wrapper_descr">
+                        <h3 data-i18n="01011">- 3D modeling</h3>
+                        <h3 data-i18n="01012">- Product design</h3>
+                        <h3 data-i18n="01013">- Exterior and interior visualization</h3>
+                        <h3 data-i18n="01014">- Interactive 3D configurators</h3>
+                        <h3 data-i18n="01015">- Smart home design</h3>
+                </div>
+            </div>
+            <div class="container main__dummy"></div>
         </div>
     </section>
 
@@ -24,4 +45,4 @@
     <script src="/assets/js/header.js"></script>
     
 </body>
-</html>
+</html> 

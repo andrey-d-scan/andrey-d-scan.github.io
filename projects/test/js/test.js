@@ -398,7 +398,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
 
                 // Загрузка видео текстуры
-                api.addVideoTexture(`${window.location.origin}/projects/test/img/video.mp4`, { loop: true, mute: true }, function(err, uid) {
+                api.addVideoTexture(`${window.location.origin}/assets/img/video/Intro_McLaren.mp4`, { loop: true, mute: true }, function(err, uid) {
                     if (!err) {
                         videoTextureUid = uid;
                         console.log('Video texture loaded with UID:', uid);

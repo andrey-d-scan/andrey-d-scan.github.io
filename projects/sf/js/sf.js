@@ -154,7 +154,8 @@ document.addEventListener('DOMContentLoaded', function() {
         subwoofer: 'No',
         grilleVisible: true
     };
-   
+    
+    
     // Load a model
     client.init('46f74f13389e46b499d74d7388a73a0e', {
         autostart: 1,

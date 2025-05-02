@@ -148,6 +148,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
 
+            // Загрузка сохранённой темы
+            function loadTheme() {
+                const savedTheme = localStorage.getItem('theme') || 'light';
+                document.documentElement.setAttribute('data-bs-theme', savedTheme);
+                console.log('Theme loaded:', savedTheme);
+            }
+
+            // Переключение темы
+            function toggleTheme() {
+                const html = document.documentElement;
+                const currentTheme = html.getAttribute('data-bs-theme') || 'light';
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                html.setAttribute('data-bs-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+            }
+
+            // Вызов загрузки темы сразу
+            loadTheme();
+            // Обработчик для кнопки переключения темы
+            const themeToggle = document.querySelector('.theme-toggle-btn');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', toggleTheme);
+            }
+
             // Загрузка футера
             const footerContainer = document.getElementById('footer');
             if (footerContainer) {

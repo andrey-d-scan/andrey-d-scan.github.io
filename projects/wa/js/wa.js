@@ -771,7 +771,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         // Black
         document.getElementById('hardware-black').addEventListener('click', function() {
-            ['MI_AlumColor', 'MI_AlumColor_Logo', 'MI_CromeColor', 'MI_ScrewDecal', 'MI_AcousticDiode'].forEach(name => {
+            ['MI_AlumColor', 'MI_AlumColor_Logo', 'MI_CromeColor', 'MI_ScrewDecal',].forEach(name => {
                 changeColor(name, [0.05, 0.05, 0.05]); 
             });
             // Text White

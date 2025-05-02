@@ -8,17 +8,30 @@
     <link rel="stylesheet" href="/assets/css/style.min.css">
 
     <style type="text/css">
-        #api-frame { width: 100%; height: 100%; border: none; display: block; }
+        [data-bs-theme="light"] {
+            --bs-body-bg: #ddd; 
+            --bs-body-color: #171717;
+            --bs-btn-bg: #ffffff;
+
+        }
+        [data-bs-theme="dark"] {
+            /* --bs-body-bg: #000000; */
+            --bs-body-color: #fff;
+            --bs-btn-bg: #1b1b1b;
+
+        }
+
+        #api-frame { width: 100%; height: 100%; border: none; display: block; color-scheme: none;}
         #productDispContainer {flex: 1; width: auto; position: relative; height: 100dvh; }
         .container-fluid { display: flex; height: 100dvh; width: 100%;}
-        .test-buttons { display: flex; flex-direction: column; gap: 10px; width: 200px; padding: 10px; background: #ddd; overflow-y: auto; }
+        .test-buttons { display: flex; flex-direction: column; gap: 10px; width: 200px; padding: 10px; background: var(--bs-body-bg); overflow-y: auto; }
         .button-group { margin-bottom: 20px; }
         .button-group h3 { margin: 0 0 10px 0; font-size: 1.2em; }
         .test-btn { display: block; width: 100%; padding: 8px; margin-bottom: 5px; background: #fff; border: 1px solid #aaa; cursor: pointer; text-align: left; }
         .test-btn:hover { background: #f0f0f0; }
         .test-btn { padding: 0; background: #fff; border: 1px solid #aaa; }
         .btn-bg { width: 100%; height: 30px; }
-        .btn-text { padding-left: 8px; text-align: left; }
+        .btn-text { padding-left: 8px; text-align: left; background: var(--bs-btn-bg)}
 
         /* Calibration color */
         #materialControls { position: fixed; top: 70px; right: 10px; z-index: 1000; background: rgba(0, 0, 0, 0.8); font-size: 0.8em; padding: 5px; color: white; border-radius: 5px; display: flex; flex-direction: column; gap: 5px; width: 180px; }
@@ -26,6 +39,10 @@
         #materialControls > div > label { margin: 0; }
         #materialControls > div > input { width: 60px; margin: 0; }
         #materialControls .title { font-weight: bold; margin-bottom: 5px;}
+
+        @media (max-width: 575px) {
+            .test-buttons {max-width: 25%; padding: 5px;}
+        }
     </style>
 </head>
 <body>
@@ -84,25 +101,25 @@
             <h3>Color</h3>
             <button id="test-btn-1" class="test-btn">
                 <div class="btn-bg" style="background: #0a0c0b;"></div>
-                <div class="btn-text">Diamond Black</div>
+                <div class="btn-text">Black</div>
             </button>
             <button id="test-btn-2" class="test-btn">
                 <div class="btn-bg" style="background: #16231f;"></div>
-                <div class="btn-text">Obsidian Black</div>
+                <div class="btn-text">Obsidian</div>
             </button>
             <button id="test-btn-3" class="test-btn">
                 <div class="btn-bg" style="background: #595039;"></div>
-                <div class="btn-text">Nara Bronze</div>
+                <div class="btn-text">Bronze</div>
             </button>
             <button id="test-btn-4" class="test-btn">
                 <div class="btn-bg" style="background: #b4943f;"></div>
-                <div class="btn-text">True Gold</div>
+                <div class="btn-text">Gold</div>
             </button>
             <button id="test-btn-5" class="test-btn">
                 <div class="btn-bg" style="background: #b6b6b6;"></div>
                 <div class="btn-text">Mirror</div>
             </button>
-            <button id="test-btn-6" class="test-btn">
+            <!-- <button id="test-btn-6" class="test-btn">
                 <div class="btn-bg" style="background: #e0e0e0;"></div>
                 <div class="btn-text">6</div>
             </button>
@@ -113,7 +130,7 @@
             <button id="test-btn-8" class="test-btn">
                 <div class="btn-bg" style="background: #e0e0e0;"></div>
                 <div class="btn-text">8</div>
-            </button>
+            </button> -->
             <button id="test-btn-9" class="test-btn">
                 <div class="btn-bg" style="background: #e0e0e0;"></div>
                 <div class="btn-text">Open Doors</div>
@@ -125,10 +142,10 @@
         </div>
     </div>
     <div id="productDispContainer">
-        <iframe id="api-frame" title="Wilson Audio Alexia V" frameborder="0" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/c18058d0c3624784ad6cd56f93e81e1f/embed?autostart=1&amp;&amp;camera=0"> </iframe>
+        <iframe id="api-frame" title="Test" frameborder="0" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/c18058d0c3624784ad6cd56f93e81e1f/embed?autostart=1&amp;&amp;camera=0"> </iframe>
     </div>
 
-    <video id="video-source" src="/projects/test/img/video.mp4" loop muted style="display: none;"></video>
+    <video id="video-source" src="/assets/img/video/Intro_McLaren.mp4" loop muted style="display: none;"></video>
     
     <script src="/assets/js/header.js"></script>
     <script type="text/javascript" src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"></script>
