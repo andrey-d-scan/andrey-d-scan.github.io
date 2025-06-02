@@ -77,11 +77,11 @@
         <div class="confMenuContainer">
             <nav class="nav">
                 <div class="nav nav-pills" id="nav-tab" role="tablist">
-                    <a class="nav-item nav-link active" id="nav-model-tab" data-toggle="tab" href="#nav-modelColorContainer" role="tab" aria-controls="nav-modelColorContainer" aria-selected="true"></a>
-                    <a class="nav-item nav-link" id="nav-body-tab" data-toggle="tab" href="#nav-bodyColorContainer" role="tab" aria-controls="nav-bodyColorContainer" aria-selected="false"></a>
-                    <a class="nav-item nav-link" id="nav-grille-tab" data-toggle="tab" href="#nav-grilleColorContainer" role="tab" aria-controls="nav-grilleColorContainer" aria-selected="false"></a>
-                    <a class="nav-item nav-link" id="nav-hardware-tab" data-toggle="tab" href="#nav-hardwareColorContainer" role="tab" aria-controls="nav-hardwareColorContainer" aria-selected="false"></a>
-                    <a class="nav-item nav-link" id="nav-wa-tab" data-toggle="tab" href="#nav-waColorContainer" role="tab" aria-controls="nav-waColorContainer" aria-selected="false"></a>
+                    <a class="nav-item nav-link" id="nav-model-tab" data-toggle="tab" href="#nav-Products" role="tab" aria-controls="nav-modelColorContainer" aria-selected="true"></a>
+                    <a class="nav-item nav-link" id="nav-body-tab" data-toggle="tab" href="#nav-bodyColor" role="tab" aria-controls="nav-bodyColorContainer" aria-selected="false"></a>
+                    <a class="nav-item nav-link" id="nav-grille-tab" data-toggle="tab" href="#nav-grilleColor" role="tab" aria-controls="nav-grilleColorContainer" aria-selected="false"></a>
+                    <a class="nav-item nav-link" id="nav-hardware-tab" data-toggle="tab" href="#nav-hardwareColor" role="tab" aria-controls="nav-hardwareColorContainer" aria-selected="false"></a>
+                    <a class="nav-item nav-link active" id="nav-wa-tab" data-toggle="tab" href="#nav-Configurator" role="tab" aria-controls="nav-waColorContainer" aria-selected="false"></a>
                     <a class="nav-item fullscreen-btn" id="nav-fullscreen-tab"></a>
                 </div>    
             </nav>
@@ -136,7 +136,7 @@
                 <div class="tab-content" id="cNav-tabContent">
                     
                     <!-- Select Models -->
-                    <div class="tab-pane tabContainer fade active show" id="nav-modelColorContainer" role="tabpanel" aria-labelledby="nav-model-tab">
+                    <div class="tab-pane tabContainer fade" id="nav-Products" role="tabpanel" aria-labelledby="nav-model-tab">
                         <div class="colorDispContainer" id="modelColorContainer">
                             <div class="colorCatOpt">Floor Standing</div>
 
@@ -200,7 +200,7 @@
                     </div>
 
                     <!-- Select Body Color -->
-                    <div class="tab-pane tabContainer fade" id="nav-bodyColorContainer" role="tabpanel" aria-labelledby="nav-home-tab">
+                    <div class="tab-pane tabContainer fade" id="nav-bodyColor" role="tabpanel" aria-labelledby="nav-home-tab">
                         <div class="colorDispContainer row" id="bodyColorContainer">
                             <div class="colorCatOpt">Standard</div>
 
@@ -378,7 +378,7 @@
                     </div>
 
                     <!-- Select Grille Color -->
-                    <div class="tab-pane tabContainer fade" id="nav-grilleColorContainer" role="tabpanel" aria-labelledby="nav-profile-tab">
+                    <div class="tab-pane tabContainer fade" id="nav-grilleColor" role="tabpanel" aria-labelledby="nav-profile-tab">
                         <div class="colorDispContainer row" id="grilleColorContainer">
                             <!-- <div class="colorCatOpt">Grille Colors</div> -->
 
@@ -452,7 +452,7 @@
                     </div>
 
                     <!-- Select Hardware Color -->
-                    <div class="tab-pane tabContainer fade" id="nav-hardwareColorContainer" role="tabpanel" aria-labelledby="nav-contact-tab">
+                    <div class="tab-pane tabContainer fade" id="nav-hardwareColor" role="tabpanel" aria-labelledby="nav-contact-tab">
                         <div class="colorDispContainer row" id="hardwareColorContainer">
 
                             <div id="hardware-black" class="colorDispItem col-12 col-md-6 col-xl-4 " data-type="hardware" data-name="Black" data-color="#000000">
@@ -475,15 +475,19 @@
                         </div>
                     </div>
 
-                    <!-- Select WA -->
-                    <div class="tab-pane tabContainer fade" id="nav-waColorContainer" role="tabpanel" aria-labelledby="nav-wa-tab">
+                    <!-- Select Configurator -->
+                    <div class="tab-pane tabContainer fade active show" id="nav-Configurator" role="tabpanel" aria-labelledby="nav-wa-tab">
                         <div class="colorDispContainer" id="waColorContainer">
                             
                             <div class="colorDispItem col-12 col-xl-8" data-index="11" data-name="D.Scan">
                                 <div class="colorTextModel">Run Configurator</div>
                             </div>
-                            
+                    
                             <div id="waGroups" style="display: none;">
+
+                                <div class="colorDispItem col-12 col-xl-8" id="Video">
+                                    <div class="colorTextModel">TV</div>
+                                </div>
                                 <div class="colorCatOpt">Front Speakers</div>
 
                                 <div class="colorDispItem col-12 col-xl-8" data-type="front" data-name="Model E">

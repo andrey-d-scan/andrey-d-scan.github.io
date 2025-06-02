@@ -1,7 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
     var iframe = document.getElementById('api-frame');
     var client = new Sketchfab(iframe);
-    
+    let videoTextureUid = null; // Для хранения UID видео текстуры
+    let screenState = {autoPlay: true}; // Состояние экрана
+
     const materialUtils = {
         setMaterialTextures(materialName, albedoUid, normalUid, roughnessUid) {
             const material = window.currentModelData.materials.find(m => m.name === materialName);
@@ -159,8 +161,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Load a model
     client.init('46f74f13389e46b499d74d7388a73a0e', {
         autostart: 1,
-        // camera: 0,
+        camera: 0,
         transparent: 1,
+        webgl2: 0,
         success: function onSuccess(api) {
             api.start();
             let textureUIDs = {};
@@ -212,6 +215,19 @@ document.addEventListener('DOMContentLoaded', function() {
                         });
                     } else {
                         console.error('Error getting materials:', err);
+                    }
+                });
+
+                // Загрузка видео текстуры
+                api.addVideoTexture(`${window.location.origin}/assets/img/video/Intro_McLaren.mp4`, { loop: true, mute: true, autoplay: false }, function(err, uid) {
+                    if (!err) {
+                        videoTextureUid = uid;
+                        console.log('Video texture loaded with UID:', uid);
+                        if (screenState.autoPlay) {
+                            document.getElementById('Video')?.click();
+                        }
+                    } else {
+                        console.error('Error loading video texture:', err);
                     }
                 });
             });
@@ -297,7 +313,8 @@ document.addEventListener('DOMContentLoaded', function() {
             materialUtils.applyMaterialProperties('SF_Alum_Color', { BC: [0.05,0.05,0.05],});
             updateFinishDisplay('Red Wood');
         });
-             
+        
+
         // Переключение моделей
         document.querySelectorAll('.test-btn:not(#Grille)').forEach(btn => {
             btn.addEventListener('click', function() {
@@ -317,6 +334,25 @@ document.addEventListener('DOMContentLoaded', function() {
             const name = btn.id;
             if (configState[type] === name) {
                 btn.classList.add('active');
+            }
+        });
+
+        // Video
+        document.getElementById('Video')?.addEventListener('click', function() {
+            if (!videoTextureUid) {
+                console.error('Video texture not loaded yet');
+                return;
+            }
+            // Изменено: вся логика включения/отключения видео только здесь
+            screenState.isActive = !screenState.isActive;
+            this.classList.toggle('active', screenState.isActive);
+            if (screenState.isActive) {
+                // Показываем экран и запускаем видео
+                materialUtils.updateMaterialProperty('MI_Video', 'BCInt', 2); 
+                materialUtils.setMaterialTextures('MI_Video', videoTextureUid, null, null);
+            } else {
+                // Скрываем экран
+                materialUtils.updateMaterialProperty('MI_Video', 'BC', [0.01,0.01,0.01]);
             }
         });
 

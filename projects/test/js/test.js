@@ -1,11 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
     var iframe = document.getElementById('api-frame');
     var client = new Sketchfab(iframe);
-    const videoMode = 1; // 0 - Reset (сброс видео при скрытии), 1 - Background (видео идёт в фоне)
     let videoTextureUid = null; // Для хранения UID видео текстуры
-    let screenState = { isActive: false }; // Состояние экрана
-    let brightnessState = { isHigh: true }; // true - стандартная яркость, false - низкая
-
+    let screenState = {autoPlay: true}; // Состояние экрана
+  
     const materialUtils = {
         setMaterialTextures(materialName, albedoUid, normalUid, roughnessUid) {
             const material = window.currentModelData.materials.find(m => m.name === materialName);
@@ -373,7 +371,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
                         bindEventHandlers(textureUIDs);
                         
-
                     } else {
                         console.error('Error getting materials:', err);
                     }
@@ -398,16 +395,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
 
                 // Загрузка видео текстуры
-                api.addVideoTexture(`${window.location.origin}/assets/img/video/Intro_McLaren.mp4`, { loop: true, mute: true }, function(err, uid) {
+                api.addVideoTexture(`${window.location.origin}/assets/img/video/Intro_McLaren.mp4`, { loop: true, mute: true, autoplay: false }, function(err, uid) {
                     if (!err) {
                         videoTextureUid = uid;
                         console.log('Video texture loaded with UID:', uid);
+                        if (screenState.autoPlay) {
+                            document.getElementById('TV')?.click();
+                        }
                     } else {
                         console.error('Error loading video texture:', err);
                     }
                 });
-
-
 
             });
         },
@@ -465,12 +463,14 @@ document.addEventListener('DOMContentLoaded', function() {
             materialUtils.applyMaterialProperties('M_Glass_Bl', { M: 1 });
         });
         
-        document.getElementById('test-btn-10')?.addEventListener('click', function() {
+        document.getElementById('TV')?.addEventListener('click', function() {
             if (!videoTextureUid) {
                 console.error('Video texture not loaded yet');
                 return;
             }
-            if (!screenState.isActive) {
+            screenState.isActive = !screenState.isActive;
+            this.classList.toggle('active', screenState.isActive);
+            if (screenState.isActive) {
                 // Показываем экран и запускаем видео
                 materialUtils.updateMaterialProperty('MI_Video_2', 'Op', 0.5);
                 materialUtils.updateMaterialProperty('MI_Video_2', 'BCInt', 4); 
@@ -479,12 +479,6 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 // Скрываем экран
                 materialUtils.updateMaterialProperty('MI_Video_2', 'Op', 0);
-                if (videoMode === 0) {
-                    // Режим Reset: убираем текстуру, видео останавливается
-                    materialUtils.setMaterialTextures('MI_Video_2', null, null, null);
-                }
-                // Режим Background: ничего не делаем с текстурой, видео идёт в фоне
-                screenState.isActive = false;
             }
         });
 
