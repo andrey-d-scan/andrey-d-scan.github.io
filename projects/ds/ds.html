@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>D.Scan Configurator</title>
+    <title>D.Scan - Demo Configurator</title>
     <link rel="icon" type="image/x-icon" href="/assets/favicons/favicon.ico">
     <link rel="stylesheet" href="/assets/css/style.min.css">
     <link rel="stylesheet" type="text/css" href="css/app.min.css">
@@ -80,7 +80,7 @@
                     <a class="nav-item nav-link active" id="nav-model-tab" data-toggle="tab" href="#nav-modelColorContainer" role="tab" aria-controls="nav-modelColorContainer" aria-selected="true"></a>
                     <a class="nav-item nav-link" id="nav-body-tab" data-toggle="tab" href="#nav-bodyColorContainer" role="tab" aria-controls="nav-bodyColorContainer" aria-selected="false"></a>
                     <a class="nav-item nav-link" id="nav-grille-tab" data-toggle="tab" href="#nav-grilleColorContainer" role="tab" aria-controls="nav-grilleColorContainer" aria-selected="false"></a>
-                    <!-- <a class="nav-item nav-link" id="nav-hardware-tab" data-toggle="tab" href="#nav-hardwareColorContainer" role="tab" aria-controls="nav-hardwareColorContainer" aria-selected="false"></a> -->
+                    <a class="nav-item nav-link" id="nav-hardware-tab" data-toggle="tab" href="#nav-hardwareColorContainer" role="tab" aria-controls="nav-hardwareColorContainer" aria-selected="false"></a>
                     <a class="nav-item nav-link" id="nav-wa-tab" data-toggle="tab" href="#nav-waColorContainer" role="tab" aria-controls="nav-waColorContainer" aria-selected="false"></a>
                     <a class="nav-item fullscreen-btn" id="nav-fullscreen-tab"></a>
                 </div>    
@@ -380,7 +380,7 @@
                     <!-- Select Grille Color -->
                     <div class="tab-pane tabContainer fade" id="nav-grilleColorContainer" role="tabpanel" aria-labelledby="nav-profile-tab">
                         <div class="colorDispContainer row" id="grilleColorContainer">
-                            <div class="colorCatOpt">Grille Colors</div>
+                            <!-- <div class="colorCatOpt">Grille Colors</div> -->
 
                             <div id="no-grille" class="colorDispItem col-12 col-md-6 col-xl-4 " data-type="grilles" data-name="No Grille" data-color="transparent">
                                 <div class="colorBox" style="background: linear-gradient(135deg, rgba(255,255,255,1) 48.9%, rgba(255,0,0,1) 49%, rgba(255,0,0,1) 51%, rgba(255,255,255,1) 51.1%);"></div>
@@ -429,7 +429,7 @@
                                 <div class="colorText">Crimson Red</div>
                             </div>
 
-                            <div class="colorCatOpt">Hardware Colors</div>
+                            <!-- <div class="colorCatOpt">Hardware Colors</div>
 
                             <div id="hardware-black" class="colorDispItem col-12 col-md-6 col-xl-4 " data-type="hardware" data-name="Black" data-color="#000000">
                                 <div class="colorBox" style="background: #000000"></div>
@@ -444,7 +444,7 @@
                             <div id="hardware-gold" class="colorDispItem col-12 col-md-6 col-xl-4 " data-type="hardware" data-name="Gold" data-color="#d4af37">
                                 <div class="colorBox" style="background: #d4af37"></div>
                                 <div class="colorText">Gold</div>
-                            </div>
+                            </div> -->
 
                             <div class="col-12">&#xA0;</div>
                             <div class="col-12 py-4 d-block d-lg-none">&#xA0;</div>
@@ -455,17 +455,20 @@
                     <div class="tab-pane tabContainer fade" id="nav-hardwareColorContainer" role="tabpanel" aria-labelledby="nav-contact-tab">
                         <div class="colorDispContainer row" id="hardwareColorContainer">
 
-                            <div id="hardware-black1" class="colorDispItem col-12 col-md-6 col-xl-4 " data-type="hardware" data-name="Black" data-color="#000000">
+                            <div id="hardware-black" class="colorDispItem col-12 col-md-6 col-xl-4 " data-type="hardware" data-name="Black" data-color="#000000">
                                 <div class="colorBox" style="background: #000000"></div>
                                 <div class="colorText">Black</div>
                             </div>
                             
-                            <div id="hardware-silver-natural1" class="colorDispItem col-12 col-md-6 col-xl-4 " data-type="hardware" data-name="Silver / Natural" data-color="#aaaaaa">
+                            <div id="hardware-silver-natural" class="colorDispItem col-12 col-md-6 col-xl-4 " data-type="hardware" data-name="Silver / Natural" data-color="#aaaaaa">
                                 <div class="colorBox" style="background: #aaaaaa"></div>
                                 <div class="colorText">Silver / Natural</div>
                             </div>
 
-                            
+                            <!-- <div id="hardware-gold" class="colorDispItem col-12 col-md-6 col-xl-4 " data-type="hardware" data-name="Gold" data-color="#d4af37">
+                                <div class="colorBox" style="background: #d4af37"></div>
+                                <div class="colorText">Gold</div>
+                            </div>                             -->
                             
                             <div class="col-12">&#xA0;</div>
                             <div class="col-12 py-4 d-block d-lg-none">&#xA0;</div>
@@ -586,7 +589,7 @@
                 
 
                 <div class="footnote">
-                    Colors will vary depending on display device and ambient lighting.
+                    Demo Configurator.
                 </div>
             </div>
 

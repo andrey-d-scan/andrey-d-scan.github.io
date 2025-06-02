@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
         { uid: 'e5657db58ef649b9a1a5aa0d35abda88', name: 'Center A' },
         { uid: '9dcd7023038d4d55b0e691ba6529c63a', name: 'Sub B' },
         { uid: '63508b8e85e34aff84a6348c4759c86f', name: 'Sub A' },
-        { uid: 'b60c16b531084dbda253b8c7b8b0b2e2', name: 'D.Scan' },
+        { uid: 'b60c16b531084dbda253b8c7b8b0b2e2', name: 'Conf' },
         { uid: 'b479bb02b127456c979f5b1f867eab6f', name: 'Sub C' },
     ];
     
@@ -782,19 +782,18 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Gold
-        document.getElementById('hardware-gold').addEventListener('click', function() {
-            ['MI_AlumColor', 'MI_AlumColor_Logo', 'MI_CromeColor', 'MI_ScrewDecal', 'MI_AcousticDiode'].forEach(name => {
-                changeColor(name, [0.6584, 0.4287, 0.0382]
-); 
-            });
-            // Text White
-            currentModelData.materials.forEach(material => {
-                if (material.name.startsWith('MI_Logo') || material.name.startsWith('MI_Text')) {
-                    changeColor(material.name, [1, 1, 1]); // Text Black
-                }
-            });
-        });
+        // // Gold
+        // document.getElementById('hardware-gold').addEventListener('click', function() {
+        //     ['MI_AlumColor', 'MI_AlumColor_Logo', 'MI_CromeColor', 'MI_ScrewDecal', 'MI_AcousticDiode'].forEach(name => {
+        //         changeColor(name, [0.6584, 0.4287, 0.0382]); 
+        //     });
+        //     // Text White
+        //     currentModelData.materials.forEach(material => {
+        //         if (material.name.startsWith('MI_Logo') || material.name.startsWith('MI_Text')) {
+        //             changeColor(material.name, [1, 1, 1]); // Text Black
+        //         }
+        //     });
+        // });
 
     }
 

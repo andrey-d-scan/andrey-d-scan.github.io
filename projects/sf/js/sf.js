@@ -128,27 +128,27 @@ document.addEventListener('DOMContentLoaded', function() {
     // Конфигурация объектов (аналогично первому коду)
     const nodeMapping = {
         front: {
-            'Amati': ['SF_Amati_L', 'SF_Amati_R'],
-            'Serafino': ['SF_Serafino_L', 'SF_Serafino_R'],
-            'Guarneri': ['SF_Guarneri_L', 'SF_Guarneri_R']
+            'Model C': ['SF_Model_C_L', 'SF_Model_C_R'],
+            'Model B': ['SF_Model_B_L', 'SF_Model_B_R'],
+            'Model A': ['SF_Model_A_L', 'SF_Model_A_R']
         },
         center: {
-            'Vox': ['SF_Vox'],
+            'Center A': ['SF_Center_A'],
             'No': []
         },
         surround: {
-            'Guarneri_S': ['SF_Guarneri_SL', 'SF_Guarneri_SR'],
+            'Sur A': ['SF_Sur_A_SL', 'SF_Sur_A_SR'],
             'No': []
         },
         subwoofer: {
-            'Sub1': ['SF_Sub1'],
+            'Sub A': ['SF_Sub_A'],
             'No': []
         }
     };
 
     // Состояние выбора
     const configState = {
-        front: 'Guarneri',
+        front: 'Model A',
         center: 'No',
         surround: 'No',
         subwoofer: 'No',
