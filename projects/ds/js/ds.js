@@ -552,6 +552,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // document.getElementById('clearcoat-roughness-input')?.addEventListener('input', function(e) {
         //     materialUtils.applyMaterialProperties('MI_MainColor', { CCRough: parseFloat(e.target.value) || 0.04 });
         // });
+        // document.getElementById('opacity-input')?.addEventListener('input', function(e) {
+        //     materialUtils.applyMaterialProperties('MI_Grile', { Op: parseFloat(e.target.value) || 0 });
+        // });
 
         // Note: RGB values are used instead of HEX due to Sketchfab's color processing.
         // HEX codes from the interface (e.g., #3f3a37 for Galaxy Gray) differ from actual RGB after model upload,
@@ -656,47 +659,47 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Saffron Pearl
         document.getElementById('body-saffron-pearl').addEventListener('click', function() {
-            materialUtils.applyMaterialProperties('MI_MainColor', {BC:[0.7379, 0.4179, 0.0452], M: 1});
+            materialUtils.applyMaterialProperties('MI_MainColor', {BC:[0.7379, 0.4179, 0.0452], M: 0.1});
         });
         // Bergamot Pearl
         document.getElementById('body-bergamot-pearl').addEventListener('click', function() {
-            materialUtils.applyMaterialProperties('MI_MainColor', {BC:[0.8796, 0.1714, 0.0160], M: 1});
+            materialUtils.applyMaterialProperties('MI_MainColor', {BC:[0.8796, 0.1714, 0.0160], M: 0.1});
         });
         // Cranberry Pearl
         document.getElementById('body-cranberry-pearl').addEventListener('click', function() {
-            materialUtils.applyMaterialProperties('MI_MainColor', {BC:[0.0802, 0.0122, 0.0091], M: 1});
+            materialUtils.applyMaterialProperties('MI_MainColor', {BC:[0.0802, 0.0122, 0.0091], M: 0.1});
         });
         // Olympia Pearl
         document.getElementById('body-olympia-pearl').addEventListener('click', function() {
-            materialUtils.applyMaterialProperties('MI_MainColor', {BC:[0.7454, 0.7230, 0.7230], M: 1});
+            materialUtils.applyMaterialProperties('MI_MainColor', {BC:[0.7454, 0.7230, 0.7230], M: 0.1});
         });
         // Viola Pearl
         document.getElementById('body-viola-pearl').addEventListener('click', function() {
-            materialUtils.applyMaterialProperties('MI_MainColor', {BC:[0.0382, 0.0185, 0.1413], M: 1}); 
+            materialUtils.applyMaterialProperties('MI_MainColor', {BC:[0.0382, 0.0185, 0.1413], M: 0.1}); 
         });
         // Glacier Frost Pearl
         document.getElementById('body-glacier-frost-pearl').addEventListener('click', function() {
-            materialUtils.applyMaterialProperties('MI_MainColor', {BC:[0.8879, 0.8879, 0.8469], M: 1});
+            materialUtils.applyMaterialProperties('MI_MainColor', {BC:[0.8879, 0.8879, 0.8469], M: 0.1});
         });
         // Silver Ice Pearl
         document.getElementById('body-silver-ice-pearl').addEventListener('click', function() {
-            materialUtils.applyMaterialProperties('MI_MainColor', {BC:[0.6308, 0.7011, 0.7835], M: 1});
+            materialUtils.applyMaterialProperties('MI_MainColor', {BC:[0.6308, 0.7011, 0.7835], M: 0.1});
         });
         // Blue Orchid Pearl
         document.getElementById('body-blue-orchid-pearl').addEventListener('click', function() {
-            materialUtils.applyMaterialProperties('MI_MainColor', {BC:[0.1022, 0.4072, 0.4910], M: 1});
+            materialUtils.applyMaterialProperties('MI_MainColor', {BC:[0.1022, 0.4072, 0.4910], M: 0.1});
         });
         // Ruby Red Pearl
         document.getElementById('body-ruby-red-pearl').addEventListener('click', function() {
-            materialUtils.applyMaterialProperties('MI_MainColor', {BC:[0.2232, 0.0003, 0.0003], M: 1});
+            materialUtils.applyMaterialProperties('MI_MainColor', {BC:[0.2232, 0.0003, 0.0003], M: 0.1});
         });
         // Ember Pearl
         document.getElementById('body-ember-pearl').addEventListener('click', function() {
-            materialUtils.applyMaterialProperties('MI_MainColor', {BC:[0.0467, 0.0080, 0.0070], M: 1});
+            materialUtils.applyMaterialProperties('MI_MainColor', {BC:[0.0467, 0.0080, 0.0070], M: 0.1});
         });
         // NZ Black Sand Pearl
         document.getElementById('body-nz-black-sand-pearl').addEventListener('click', function() {
-            materialUtils.applyMaterialProperties('MI_MainColor', {BC:[0.0273, 0.0176, 0.0110], M: 1});
+            materialUtils.applyMaterialProperties('MI_MainColor', {BC:[0.0273, 0.0176, 0.0110], M: 0.1});
         });
 
 

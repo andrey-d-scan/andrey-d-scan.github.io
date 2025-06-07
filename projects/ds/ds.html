@@ -51,6 +51,10 @@
             <label for="clearcoat-roughness-input">Roughness (0-1)</label>
             <input type="number" id="clearcoat-roughness-input" min="0" max="1" step="0.01" value="0.04">
         </div>
+        <div>
+            <label for="clearcoat-roughness-input">Opacity (0-1)</label>
+            <input type="number" id="opacity-input" min="0" max="1" step="0.1" value="0">
+        </div>
     </div> -->
 
 
@@ -380,7 +384,7 @@
                     <!-- Select Grille Color -->
                     <div class="tab-pane tabContainer fade" id="nav-grilleColor" role="tabpanel" aria-labelledby="nav-profile-tab">
                         <div class="colorDispContainer row" id="grilleColorContainer">
-                            <!-- <div class="colorCatOpt">Grille Colors</div> -->
+                            <div class="colorCatOpt">Grille Colors</div>
 
                             <div id="no-grille" class="colorDispItem col-12 col-md-6 col-xl-4 " data-type="grilles" data-name="No Grille" data-color="transparent">
                                 <div class="colorBox" style="background: linear-gradient(135deg, rgba(255,255,255,1) 48.9%, rgba(255,0,0,1) 49%, rgba(255,0,0,1) 51%, rgba(255,255,255,1) 51.1%);"></div>
@@ -454,6 +458,8 @@
                     <!-- Select Hardware Color -->
                     <div class="tab-pane tabContainer fade" id="nav-hardwareColor" role="tabpanel" aria-labelledby="nav-contact-tab">
                         <div class="colorDispContainer row" id="hardwareColorContainer">
+
+                            <div class="colorCatOpt">Hardware Colors</div>
 
                             <div id="hardware-black" class="colorDispItem col-12 col-md-6 col-xl-4 " data-type="hardware" data-name="Black" data-color="#000000">
                                 <div class="colorBox" style="background: #000000"></div>
