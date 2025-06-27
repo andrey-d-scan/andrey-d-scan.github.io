@@ -205,7 +205,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Restrict body colors based on model name or index
     function restrictBodyColors() {
-        const limitedColorModels = ['Model A', 'Bookshelf'];
+        const limitedColorModels = ['Bookshelf'];
         const allowedColors = [
             'body-galaxy-gray', 'body-quartz', 'body-carbon',
             'body-ivory', 'body-diamond-black', 'body-crimson-satin'
