@@ -90,6 +90,7 @@ document.addEventListener('DOMContentLoaded', function() {
         { uid: '63508b8e85e34aff84a6348c4759c86f', name: 'Sub A' },
         { uid: 'b60c16b531084dbda253b8c7b8b0b2e2', name: 'Conf' },
         { uid: 'b479bb02b127456c979f5b1f867eab6f', name: 'Sub C' },
+        { uid: 'eac4fe8b6d5f405293ecb0cf41dab71d', name: 'Model F' },
     ];
     
     // Object to store states of materials
